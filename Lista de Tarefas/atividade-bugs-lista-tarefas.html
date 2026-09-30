@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#182632">
+  <meta name="description" content="Organize estudos, projetos e entregas. Um planejador pessoal para a rotina dos alunos do SENAI São Paulo.">
+  <title>Próximo Passo — Agenda do aluno</title>
+  <link rel="stylesheet" href="tarefas.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Ir para minhas tarefas</a>
+  <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M7 3v4m10-4v4M3 11h18m-13 4h1m6 0h1"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h12M9 12h12M9 18h12M3 6h1M3 12h1M3 18h1"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7m4-7v7"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 5C9 3 5 3 2 4v15c4-1 7-1 10 1 3-2 6-2 10-1V4c-3-1-7-1-10 1Zm0 0v15"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="m15 4 5 5M4 20l5-1L21 7l-5-5L4 14Zm0 0 4-4"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M4 16v5h16v-5"/></symbol>
+  </svg>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Organização das tarefas">
+      <a class="brand" href="atividade-bugs-lista-tarefas.html" aria-label="Próximo Passo, início"><span class="brand-mark" aria-hidden="true">p<span>p</span><i></i></span><span>próximo<span class="brand-second">passo<span class="brand-dot">.</span></span></span></a>
+      <div class="student-badge"><span class="senai-label">SENAI <small>SP</small></span><span>ESPAÇO DO ALUNO</span></div>
+      <p class="nav-caption">SEU PLANEJAMENTO</p>
+      <nav id="smart-nav" class="navigation" aria-label="Visões de tarefas">
+        <button type="button" class="nav-item active" data-view="day" aria-current="page"><svg class="icon"><use href="#i-sun"/></svg><span>Meu dia</span><span class="nav-count" data-count="day">0</span></button>
+        <button type="button" class="nav-item" data-view="important"><svg class="icon"><use href="#i-star"/></svg><span>Importantes</span><span class="nav-count" data-count="important">0</span></button>
+        <button type="button" class="nav-item" data-view="planned"><svg class="icon"><use href="#i-calendar"/></svg><span>Planejadas</span><span class="nav-count" data-count="planned">0</span></button>
+        <button type="button" class="nav-item" data-view="all"><svg class="icon"><use href="#i-list"/></svg><span>Todas as tarefas</span><span class="nav-count" data-count="all">0</span></button>
+        <button type="button" class="nav-item" data-view="done"><svg class="icon"><use href="#i-check"/></svg><span>Concluídas</span><span class="nav-count" data-count="done">0</span></button>
+      </nav>
+      <div class="list-heading"><p class="nav-caption">MINHAS LISTAS</p><button id="new-list-btn" class="icon-button" type="button" aria-label="Criar uma lista"><svg class="icon"><use href="#i-plus"/></svg></button></div>
+      <nav id="custom-lists" class="navigation" aria-label="Listas de estudo"></nav>
+      <div class="sidebar-footer"><div class="student-avatar" aria-hidden="true">SP</div><div><strong>Aprender. Fazer. Evoluir.</strong><span>São Paulo · Educação profissional</span></div></div>
+    </aside>
+    <main id="main-content" class="workspace" tabindex="-1">
+      <header class="workspace-header"><div class="breadcrumb">SUA ROTINA <span>/</span> SEU FUTURO</div><span class="local-badge"><span aria-hidden="true"></span>Seu espaço pessoal</span></header>
+      <section class="welcome-banner" aria-labelledby="welcome-title">
+        <div class="hero-copy"><div class="eyebrow"><span class="red-line"></span> UM PASSO DE CADA VEZ</div><h1 id="welcome-title">Grandes conquistas.<br>Pequenos <em>próximos passos.</em></h1><p>Da sala de aula ao seu primeiro projeto.<br>Organize o que importa e faça acontecer.</p><span id="today-label" class="today-label"></span></div>
+        <div class="hero-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="hero-grid"></div><div class="floating-chip chip-code">&lt;/&gt;</div><div class="floating-chip chip-check"><svg class="icon"><use href="#i-check"/></svg></div><div class="step-block step-one"></div><div class="step-block step-two"></div><div class="step-block step-three"><svg class="icon"><use href="#i-arrow"/></svg></div><span class="art-caption">CONSTRUA O SEU AMANHÃ</span></div>
+      </section>
+      <section class="overview" aria-label="Resumo do planejamento">
+        <div class="stat-card"><span class="stat-icon red"><svg class="icon"><use href="#i-sun"/></svg></span><div><strong id="today-pending">0</strong><span>pendentes no meu dia</span></div></div>
+        <div class="stat-card"><span class="stat-icon amber"><svg class="icon"><use href="#i-calendar"/></svg></span><div><strong id="overdue-count">0</strong><span>entregas em atraso</span></div></div>
+        <div class="stat-card progress-card"><div><strong id="progress-label">0%</strong><span>do meu dia concluído</span></div><div id="day-progress" class="progress-ring" role="progressbar" aria-label="Conclusão das tarefas do meu dia" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></div></div>
+      </section>
+      <section class="tasks-section" aria-labelledby="view-title">
+        <div class="section-heading"><div><div class="heading-inline"><h2 id="view-title">Meu dia</h2><button id="rename-list-btn" class="icon-button" type="button" aria-label="Renomear esta lista" hidden><svg class="icon"><use href="#i-edit"/></svg></button></div><p id="view-description">Escolha suas prioridades e dê o próximo passo.</p></div><button id="focus-add-btn" type="button" class="button button-light"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>Nova tarefa</button></div>
+        <div class="toolbar"><div class="search-field"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><label for="task-search" class="sr-only">Buscar tarefas nesta visão</label><input id="task-search" type="search" placeholder="Buscar nesta visão" autocomplete="off"></div><div class="sort-field"><label for="task-sort">Ordenar:</label><select id="task-sort"><option value="created">Mais recentes</option><option value="due">Prazo mais próximo</option><option value="important">Importância</option><option value="title">A–Z</option></select></div></div>
+        <form id="task-form" class="task-composer">
+          <label for="task-input">Qual é o seu próximo passo?</label>
+          <div class="composer-main"><span class="empty-check" aria-hidden="true"></span><input id="task-input" type="text" placeholder="Ex.: finalizar o projeto de automação" required maxlength="300" autocomplete="off"><button id="add-btn" class="button button-primary" type="submit">Adicionar<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button></div>
+          <div class="composer-options"><div><label for="task-list-select">Lista</label><select id="task-list-select"></select></div><div><label for="task-due">Entrega</label><input id="task-due" type="date"></div><button id="add-important" class="priority-toggle" type="button" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg>Importante</button></div>
+        </form>
+        <div class="list-summary"><p id="counter" role="status" aria-live="polite" aria-atomic="true">0 tarefas pendentes nesta visão</p><span class="list-help">Cada tarefa concluída é um avanço.</span></div>
+        <ul id="task-list" class="task-list" aria-label="Tarefas pendentes"></ul>
+        <div id="empty-state" class="empty-state"><div class="empty-illustration" aria-hidden="true"><svg class="icon"><use href="#i-list"/></svg><span>+</span></div><h3 id="empty-title">Seu dia começa com um passo.</h3><p id="empty-description">Adicione uma tarefa acima ou traga uma tarefa existente para Meu dia.</p><div class="empty-tags" aria-hidden="true"><span>Estudar</span><span>Praticar</span><span>Entregar</span></div></div>
+        <details id="completed-section" class="completed-section" hidden><summary id="completed-summary">Concluídas</summary><ul id="completed-list" class="task-list" aria-label="Tarefas concluídas"></ul></details>
+      </section>
+      <footer class="workspace-footer"><span id="storage-label">Salvo automaticamente neste navegador</span><button id="export-btn" type="button" class="text-button"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Exportar tarefas</button></footer>
+      <p id="storage-warning" class="storage-warning" role="alert" hidden></p>
+    </main>
+  </div>
+  <div class="toast" id="toast" hidden><span id="status-message" role="status" aria-live="polite" aria-atomic="true"></span><button id="undo-btn" type="button" hidden>Desfazer</button><button id="dismiss-toast" class="icon-button" type="button" aria-label="Fechar mensagem"><svg class="icon"><use href="#i-close"/></svg></button></div>
+  <dialog id="task-dialog" class="editor-dialog" aria-labelledby="editor-heading">
+    <form id="edit-form"><div class="dialog-heading"><div><span class="eyebrow">CADA DETALHE CONTA</span><h2 id="editor-heading">Seu próximo passo</h2></div><button type="button" class="icon-button close-dialog" aria-label="Fechar edição"><svg class="icon"><use href="#i-close"/></svg></button></div>
+      <label for="edit-title">Tarefa</label><input id="edit-title" required maxlength="300" autocomplete="off">
+      <div class="editor-grid"><div><label for="edit-list">Lista</label><select id="edit-list"></select></div><div><label for="edit-due">Data de entrega</label><input id="edit-due" type="date"></div></div>
+      <div class="editor-checks"><label><input id="edit-important" type="checkbox">Marcar como importante</label><label><input id="edit-day" type="checkbox">Adicionar ao Meu dia de hoje</label></div>
+      <label for="edit-notes">Anotações</label><textarea id="edit-notes" rows="4" maxlength="5000" placeholder="Orientações do professor, materiais ou ideias para este trabalho…"></textarea>
+      <fieldset class="steps-fieldset"><legend>Divida em pequenas etapas</legend><ul id="edit-steps"></ul><div class="step-composer"><label for="step-input" class="sr-only">Nova etapa</label><input id="step-input" maxlength="200" placeholder="Ex.: revisar os requisitos"><button id="add-step-btn" type="button" class="icon-button" aria-label="Adicionar etapa"><svg class="icon"><use href="#i-plus"/></svg></button></div></fieldset>
+      <p class="editor-hint">As etapas ajudam a organizar. A conclusão da tarefa é marcada por você.</p>
+      <div class="dialog-actions"><button type="button" class="button button-light close-dialog">Cancelar</button><button class="button button-primary" type="submit">Salvar alterações</button></div>
+    </form>
+  </dialog>
+  <dialog id="list-dialog" class="list-dialog" aria-labelledby="list-dialog-heading"><form id="list-form"><div class="dialog-heading"><h2 id="list-dialog-heading">Uma lista, um novo foco.</h2><button class="icon-button close-dialog" type="button" aria-label="Fechar lista"><svg class="icon"><use href="#i-close"/></svg></button></div><p>Agrupe por disciplina, projeto ou objetivo.</p><label for="list-name">Nome da lista</label><input id="list-name" required maxlength="45" placeholder="Ex.: Projeto integrador" autocomplete="off"><div class="dialog-actions"><button class="button button-light close-dialog" type="button">Cancelar</button><button id="save-list-btn" class="button button-primary" type="submit">Criar lista</button></div></form></dialog>
+  <noscript><p class="storage-warning">Ative o JavaScript para organizar suas tarefas.</p></noscript>
+  <script src="tarefas.js"></script>
+</body>
+</html>

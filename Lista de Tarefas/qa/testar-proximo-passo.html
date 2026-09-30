@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regressão — Próximo Passo</title>
+<style>body{font:14px system-ui;margin:20px}pre{white-space:pre-wrap;line-height:1.6}iframe{width:1280px;height:1000px;border:1px solid #bbb}</style>
+<h1>Regressão do Próximo Passo</h1>
+<p>PASS exige o comportamento correto. Cada cenário carrega uma cópia isolada da aplicação; os dados reais do navegador não são alterados.</p>
+<pre id="report">Executando…</pre>
+<iframe id="app" title="Aplicação em teste"></iframe>
+<script>
+(async () => {
+  const frame = document.getElementById('app');
+  const results = [];
+  let html, css, js, w, d;
+  const store = new Map();
+  const key = 'senai_proximo_passo_v1';
+  const memoryStorage = { getItem: key => store.get(key) ?? null, setItem: (key, value) => store.set(key, String(value)) };
+  const assert = (condition, message) => { if (!condition) throw new Error(message); };
+  const $ = id => d.getElementById(id);
+  const run = code => w.eval(code);
+  const view = name => d.querySelector(`[data-view="${name}"]`).click();
+  const rows = () => [...d.querySelectorAll('#task-list .task-row')];
+  const titleRow = text => [...d.querySelectorAll('.task-row')].find(row => row.querySelector('.task-title-button').textContent === text);
+  const action = (text, action) => titleRow(text).querySelector(`[data-action="${action}"]`).click();
+  const input = (id, value) => { $(id).value = value; $(id).dispatchEvent(new w.Event('input', { bubbles: true })); };
+  function add(text, { due = '', list } = {}) {
+    input('task-input', text); $('task-due').value = due;
+    if (list) $('task-list-select').value = list;
+    $('task-form').requestSubmit();
+  }
+  async function fixture({ reset = true, storage = memoryStorage } = {}) {
+    if (reset) store.clear();
+    window.qaStorage = storage;
+    const env = 'window.qaErrors=[];window.addEventListener("error",e=>{qaErrors.push(e.message);e.preventDefault()});Object.defineProperty(window,"localStorage",{value:parent.qaStorage,configurable:true});';
+    const page = html.replace('<link rel="stylesheet" href="tarefas.css">', `<style>${css}</style>`)
+      .replace('<script src="tarefas.js"><\/script>', `<script>${env}<\/script><script>${js}<\/script>`);
+    frame.style.width = '1280px';
+    await new Promise(resolve => { frame.onload = resolve; frame.srcdoc = page; });
+    w = frame.contentWindow; d = frame.contentDocument;
+    assert(w.qaErrors.length === 0, w.qaErrors.join('; '));
+  }
+  async function test(name, fn) {
+    try { await fn(); assert(!w?.qaErrors?.length, w?.qaErrors?.join('; ')); results.push(`PASS: ${name}`); }
+    catch (e) { results.push(`FAIL: ${name} — ${e.message}`); }
+  }
+  try {
+    [html, css, js] = await Promise.all(['../atividade-bugs-lista-tarefas.html', '../tarefas.css', '../tarefas.js'].map(async path => {
+      const response = await fetch(path); if (!response.ok) throw new Error(`${path}: ${response.status}`); return response.text();
+    }));
+    await test('Inicialização vazia sem exceções, com listas e contador correto', async () => {
+      await fixture(); assert(rows().length === 0 && run('state.tasks.length') === 0, 'Estado inicial');
+      assert(d.querySelectorAll('#custom-lists button').length === 3 && $('counter').textContent.startsWith('0'), 'Listas ou contador');
+    });
+    await test('Inclusão por envio, sem recarga, com trim e identificadores distintos', async () => {
+      await fixture(); const documentBefore = d; add('  Revisar circuitos  '); add('Entregar projeto');
+      assert(d === documentBefore && rows().length === 2, 'Documento ou quantidade');
+      assert(run('state.tasks[0].text') === 'Revisar circuitos' && run('state.tasks[0].id !== state.tasks[1].id'), 'Trim/identidade');
+      assert($('counter').textContent.startsWith('2') && $('task-input').value === '', 'Contador/reset');
+    });
+    await test('Vazio e espaços rejeitados; clique/foco no campo não adiciona', async () => {
+      await fixture(); add(''); add('   '); input('task-input', 'Uma tarefa'); $('task-input').click();
+      assert(run('state.tasks.length === 0'), 'Inclusão indevida'); add('Uma tarefa'); assert(rows().length === 1, 'Recuperação da validação');
+    });
+    await test('Formulário cancela a submissão padrão', async () => {
+      await fixture(); input('task-input', 'A'); const event = new w.Event('submit', { bubbles: true, cancelable: true });
+      $('task-form').dispatchEvent(event); assert(event.defaultPrevented && rows().length === 1, 'Envio não cancelado');
+    });
+    await test('Concluir e reabrir atualiza contagem, estilo, progresso e foco', async () => {
+      await fixture(); add('A'); add('B'); action('A', 'complete');
+      assert(run('state.tasks[0].completed') && $('counter').textContent.startsWith('1'), 'Conclusão/contador');
+      assert($('progress-label').textContent === '50%' && titleRow('A').classList.contains('completed'), 'Progresso/estilo');
+      assert(d.activeElement.dataset.action === 'complete', 'Foco perdido');
+      action('A', 'complete'); assert(!run('state.tasks[0].completed') && $('counter').textContent.startsWith('2'), 'Reabertura');
+    });
+    await test('Excluir intermediário remove somente o selecionado; desfazer restaura conteúdo', async () => {
+      await fixture(); add('A'); add('B'); add('C'); action('B', 'delete');
+      assert(run('state.tasks.map(t => t.text).join("")') === 'AC', 'Exclusão extra');
+      assert(!$('undo-btn').hidden, 'Desfazer indisponível'); $('undo-btn').click();
+      assert(run('state.tasks.map(t => t.text).join("")') === 'ABC', 'Restauração');
+    });
+    await test('Exclusão da única tarefa retorna estado vazio e foco ao campo', async () => {
+      await fixture(); add('Única'); action('Única', 'delete');
+      assert(rows().length === 0 && !$('empty-state').hidden && $('counter').textContent.startsWith('0'), 'Estado vazio');
+      assert(d.activeElement === $('task-input'), 'Foco de exclusão');
+    });
+    await test('Busca normaliza acentos e exclusão filtrada respeita identidade', async () => {
+      await fixture(); add('Revisão elétrica'); add('Projeto'); input('task-search', 'revisao');
+      assert(rows().length === 1, 'Busca sem acento'); action('Revisão elétrica', 'delete');
+      assert(run('state.tasks.length === 1 && state.tasks[0].text === "Projeto"'), 'Item errado excluído');
+    });
+    await test('Importantes filtra e permite criar novas tarefas importantes', async () => {
+      await fixture(); add('A'); add('B'); action('B', 'important'); view('important');
+      assert(rows().length === 1 && titleRow('B'), 'Filtro importante'); add('C');
+      assert(run('state.tasks.find(t => t.text === "C").important'), 'Cadastro importante');
+      action('B', 'important'); assert(rows().length === 1, 'Remoção da visão');
+    });
+    await test('Meu dia adiciona/remove sem excluir a tarefa da visão geral', async () => {
+      await fixture(); view('all'); add('A'); view('day'); assert(rows().length === 0, 'Dia indevido');
+      view('all'); action('A', 'day'); view('day'); assert(rows().length === 1, 'Entrada em Meu dia');
+      action('A', 'day'); assert(rows().length === 0 && run('state.tasks.length === 1'), 'Remoção destrutiva');
+    });
+    await test('Planejadas e atrasos consideram datas locais e ignoram concluídas', async () => {
+      await fixture(); add('Atrasada', { due: '2020-01-01' }); add('Sem prazo'); add('Hoje', { due: run('today()') });
+      view('planned'); assert(rows().length === 2 && $('overdue-count').textContent === '1', 'Planejamento/atraso');
+      assert(titleRow('Hoje').querySelector('.due-today'), 'Data de hoje'); action('Atrasada', 'complete');
+      assert($('overdue-count').textContent === '0', 'Concluída ainda em atraso');
+    });
+    await test('Ordenação por nome e prazo preserva os dados', async () => {
+      await fixture(); add('Zebra', { due: '2030-05-01' }); add('Abelha', { due: '2030-06-01' });
+      $('task-sort').value = 'title'; $('task-sort').dispatchEvent(new w.Event('change'));
+      assert(rows()[0].querySelector('.task-title-button').textContent === 'Abelha', 'Ordem alfabética');
+      $('task-sort').value = 'due'; $('task-sort').dispatchEvent(new w.Event('change'));
+      assert(rows()[0].querySelector('.task-title-button').textContent === 'Zebra', 'Ordem por prazo');
+    });
+    await test('Criar e renomear lista; impedir nome vazio ou duplicado', async () => {
+      await fixture(); $('new-list-btn').click(); input('list-name', '  Robótica  '); $('list-form').requestSubmit();
+      assert($('view-title').textContent === 'Robótica', 'Criação'); add('Montar braço');
+      const listId = run('state.tasks[0].listId'); assert(run('state.lists.find(l => l.id === ' + JSON.stringify(listId) + ').name') === 'Robótica', 'Associação');
+      $('rename-list-btn').click(); input('list-name', 'Automação'); $('list-form').requestSubmit();
+      assert($('view-title').textContent === 'Automação' && titleRow('Montar braço').textContent.includes('Automação'), 'Renomear');
+      $('new-list-btn').click(); input('list-name', '   '); $('list-form').requestSubmit(); assert($('list-dialog').open, 'Nome vazio aceito');
+      input('list-name', 'automacao'); $('list-form').requestSubmit(); assert($('list-dialog').open && run('state.lists.length === 4'), 'Duplicidade aceita');
+      $('list-dialog').querySelector('.close-dialog').click();
+    });
+    await test('Editar título, prazo, notas, prioridade, lista e Meu dia', async () => {
+      await fixture(); add('Inicial'); action('Inicial', 'edit');
+      assert($('task-dialog').open && d.activeElement === $('edit-title'), 'Abertura/foco');
+      input('edit-title', 'Projeto final'); input('edit-notes', 'Consultar o professor'); $('edit-list').value = 'projetos';
+      $('edit-due').value = '2030-11-20'; $('edit-important').checked = true; $('edit-day').checked = false;
+      $('edit-form').requestSubmit(); assert(!$('task-dialog').open, 'Modal não fechou');
+      assert(run('state.tasks[0].text === "Projeto final" && state.tasks[0].notes === "Consultar o professor" && state.tasks[0].listId === "projetos" && state.tasks[0].important && state.tasks[0].due === "2030-11-20" && state.tasks[0].myDay === ""'), 'Edição incompleta');
+      assert(rows().length === 0, 'Tarefa continua no Meu dia');
+    });
+    await test('Etapas: adicionar por Enter, concluir, excluir e salvar sem concluir tarefa', async () => {
+      await fixture(); add('Projeto'); action('Projeto', 'edit'); input('step-input', 'Pesquisar');
+      $('step-input').dispatchEvent(new w.KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
+      input('step-input', 'Montar'); $('add-step-btn').click();
+      $('edit-steps').querySelector('input').click(); $('edit-form').requestSubmit();
+      assert(run('state.tasks[0].steps.length === 2 && state.tasks[0].steps[0].completed && !state.tasks[0].completed'), 'Estado das etapas');
+      assert(titleRow('Projeto').textContent.includes('1/2 etapas'), 'Resumo das etapas');
+      action('Projeto', 'edit'); $('edit-steps').querySelector('button').click(); $('edit-form').requestSubmit();
+      assert(run('state.tasks[0].steps.length === 1 && state.tasks[0].steps[0].text === "Montar"'), 'Excluir etapa');
+    });
+    await test('Cancelar edição descarta alterações e etapas do rascunho', async () => {
+      await fixture(); add('Original'); action('Original', 'edit'); input('edit-title', 'Alterada'); input('step-input', 'Etapa'); $('add-step-btn').click();
+      $('task-dialog').querySelector('.close-dialog').click();
+      assert(run('state.tasks[0].text === "Original" && state.tasks[0].steps.length === 0'), 'Rascunho vazou');
+    });
+    await test('Persistência restaura tarefas, lista e estado em nova carga', async () => {
+      await fixture(); add('Persistida', { due: '2031-05-20', list: 'projetos' }); action('Persistida', 'important'); action('Persistida', 'complete');
+      const saved = store.get(key); await fixture({ reset: false });
+      assert(run('state.tasks.length === 1 && state.tasks[0].completed && state.tasks[0].important && state.tasks[0].listId === "projetos"'), 'Dados não restaurados');
+      assert(store.get(key) === saved, 'Leitura alterou armazenamento');
+    });
+    await test('Dados corrompidos não travam e não são sobrescritos', async () => {
+      store.clear(); store.set(key, '{quebrado'); await fixture({ reset: false }); add('Nova em memória');
+      assert(!$('storage-warning').hidden && rows().length === 1, 'Fallback não funciona');
+      assert(store.get(key) === '{quebrado', 'Dados anteriores sobrescritos');
+    });
+    await test('Dados com schema inválido são rejeitados sem sobrescrita', async () => {
+      store.clear(); const raw = JSON.stringify({ version: 1, lists: [{ id: 'x', name: 'X' }], tasks: [{ id: 'bad' }] }); store.set(key, raw);
+      await fixture({ reset: false }); assert(run('state.tasks.length === 0') && !$('storage-warning').hidden && store.get(key) === raw, 'Schema inválido aceito');
+    });
+    await test('Armazenamento bloqueado permite uso em memória e mostra aviso', async () => {
+      await fixture({ storage: { getItem() { throw new Error('Bloqueado'); }, setItem() { throw new Error('Bloqueado'); } } });
+      add('Em memória'); action('Em memória', 'complete'); assert(run('state.tasks[0].completed') && !$('storage-warning').hidden, 'Falha bloqueou operação');
+    });
+    await test('Falha de gravação não perde tarefa atual', async () => {
+      await fixture({ storage: { getItem() { return null; }, setItem() { throw new Error('Quota'); } } }); add('Sem espaço');
+      assert(run('state.tasks.length === 1') && !$('storage-warning').hidden, 'Falha de quota');
+    });
+    await test('Títulos com HTML são texto; sem criação de conteúdo injetado', async () => {
+      await fixture(); const text = '<img src=x onerror="window.injected=true">'; add(text);
+      assert(!d.querySelector('.task-row img') && !w.injected && titleRow(text), 'Injeção de HTML');
+    });
+    await test('Concluídas podem ser reabertas na visão dedicada', async () => {
+      await fixture(); add('A'); action('A', 'complete'); view('done'); assert(rows().length === 1, 'Visão concluídas');
+      action('A', 'complete'); assert(rows().length === 0 && run('state.tasks[0].completed === false'), 'Reabertura');
+    });
+    await test('Meu dia antigo não apaga tarefas e valida datas impossíveis', async () => {
+      await fixture(); add('Ontem'); run('state.tasks[0].myDay = "2020-01-01"; persist(); render()');
+      assert(rows().length === 0, 'Dia antigo incluído'); view('all'); assert(rows().length === 1, 'Tarefa perdida');
+      assert(!run('validDate("2025-02-30")') && run('validDate("2024-02-29")'), 'Validação de data');
+    });
+    await test('Rótulos, checkbox nativo, status e foco acessível', async () => {
+      await fixture(); add('A'); const checkbox = titleRow('A').querySelector('input');
+      assert($('task-input').labels.length === 1 && checkbox.labels.length === 1 && checkbox.tabIndex === 0, 'Rótulos/teclado');
+      assert($('counter').getAttribute('role') === 'status' && $('counter').getAttribute('aria-live') === 'polite', 'Status');
+      assert(d.querySelector('meta[name="viewport"]'), 'Viewport');
+    });
+    for (const width of [320, 375, 768, 1280]) {
+      await test(`Layout em ${width}px com título longo, sem transbordamento horizontal`, async () => {
+        await fixture(); add('W'.repeat(300)); frame.style.width = `${width}px`;
+        await new Promise(resolve => setTimeout(resolve, 30));
+        assert(d.documentElement.scrollWidth <= d.documentElement.clientWidth, `Larguras: ${d.documentElement.scrollWidth}/${d.documentElement.clientWidth}`);
+        const row = d.querySelector('.task-row').getBoundingClientRect();
+        for (const button of d.querySelectorAll('.task-actions button')) {
+          const rect = button.getBoundingClientRect(); assert(rect.right <= row.right + 1, 'Ação cortada');
+        }
+      });
+    }
+  } catch (error) { results.push(`FAIL: Preparação — ${error.message}`); }
+  const failures = results.filter(line => line.startsWith('FAIL')).length;
+  document.getElementById('report').textContent = `${results.length - failures}/${results.length} testes passaram.\n${results.join('\n')}`;
+  document.getElementById('report').dataset.failures = String(failures);
+  document.title = failures ? 'FAIL — Próximo Passo' : 'PASS — Próximo Passo';
+})();
+</script>
+</html>

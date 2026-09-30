@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QA — Lista de tarefas</title>
+<style>body{font:15px system-ui;margin:24px;color:#203128}pre{white-space:pre-wrap;line-height:1.6}iframe{width:800px;height:450px;border:1px solid #aaa;max-width:100%}</style>
+<h1>Validação da lista de tarefas</h1>
+<p>PASS significa que a evidência descrita foi confirmada. Nos casos BUG, isso confirma o defeito, não a aprovação do produto. As correções são simuladas somente em cópias na memória.</p>
+<pre id="report">Executando…</pre>
+<iframe id="fixture" title="Aplicação isolada para validação"></iframe>
+<script>
+(async () => {
+  const frame = document.getElementById('fixture');
+  const report = document.getElementById('report');
+  const results = [];
+  const measurements = {};
+  let source;
+  let w;
+  let d;
+  const assert = (value, detail) => { if (!value) throw new Error(detail); };
+  const evaluate = code => w.eval(code);
+  const idFix = ['id="tasklist"', 'id="task-list"'];
+  const guardFix = ["if (taskText = '')", "if (taskText === '')"];
+  const loopFix = ['i <= tasks.length', 'i < tasks.length'];
+  const functionalFixes = [
+    idFix, guardFix, loopFix,
+    ["taskForm.addEventListener('click', function(event) {", "taskForm.addEventListener('submit', function(event) { event.preventDefault();"],
+    ['tasks[index].completed != tasks[index].completed;', 'tasks[index].completed = !tasks[index].completed;'],
+    ['tasks.splice(index, 2)', 'tasks.splice(index, 1)'],
+    ['tasks.filter(t => t.completed)', 'tasks.filter(t => !t.completed)']
+  ];
+  async function fixture(patches = []) {
+    let html = source;
+    for (const [before, after] of patches) {
+      assert(html.includes(before), `Trecho esperado não encontrado: ${before}`);
+      html = html.replace(before, after);
+    }
+    html = html.replace('<head>', '<head><script>window.qaErrors=[];window.addEventListener("error",function(e){qaErrors.push(e.message);e.preventDefault();});<\/script>');
+    frame.style.width = '800px';
+    await new Promise(resolve => { frame.onload = resolve; frame.srcdoc = html; });
+    w = frame.contentWindow;
+    d = frame.contentDocument;
+  }
+  async function check(id, description, callback) {
+    try { await callback(); results.push({ id, description, status: 'PASS' }); }
+    catch (error) { results.push({ id, description, status: 'FAIL', detail: error.message }); }
+  }
+  function add(text) {
+    d.getElementById('task-input').value = text;
+    d.getElementById('task-form').requestSubmit();
+  }
+  function contrast(hexA, hexB) {
+    const luminance = hex => {
+      const channels = hex.match(/\w\w/g).map(c => parseInt(c, 16) / 255).map(c => c <= .04045 ? c / 12.92 : ((c + .055) / 1.055) ** 2.4);
+      return .2126 * channels[0] + .7152 * channels[1] + .0722 * channels[2];
+    };
+    const a = luminance(hexA), b = luminance(hexB);
+    return (Math.max(a, b) + .05) / (Math.min(a, b) + .05);
+  }
+  try {
+    const response = await fetch('fixtures/atividade-original.html');
+    if (!response.ok) throw new Error(`Leitura do arquivo: HTTP ${response.status}`);
+    source = await response.text();
+    await check('BUG-01', 'Identificador divergente: taskList é null e renderTasks lança TypeError', async () => {
+      await fixture();
+      assert(evaluate('taskList === null'), 'Referência não é null');
+      let error;
+      try { evaluate('renderTasks()'); } catch (e) { error = e; }
+      assert(error?.name === 'TypeError', 'Erro de renderização não confirmado');
+    });
+    await check('BUG-02', 'Clique no campo lança atribuição a constante antes de adicionar', async () => {
+      await fixture(); d.getElementById('task-input').value = 'Estudar'; d.getElementById('task-input').click();
+      assert(w.qaErrors.some(e => e.includes('constant variable')), w.qaErrors.join('; '));
+      assert(evaluate('tasks.length === 0'), 'Tarefa foi adicionada');
+    });
+    await check('BUG-03', 'Após desbloqueio, apenas clicar no campo adiciona tarefa', async () => {
+      await fixture([idFix, guardFix, loopFix]);
+      d.getElementById('task-input').value = 'Estudar'; d.getElementById('task-input').click();
+      assert(evaluate('tasks.length === 1'), 'Inclusão indevida não reproduzida');
+    });
+    await check('BUG-04', 'Evento submit não é cancelado e não inclui a tarefa', async () => {
+      await fixture(); d.getElementById('task-input').value = 'Estudar';
+      const event = new w.Event('submit', { bubbles: true, cancelable: true });
+      d.getElementById('task-form').dispatchEvent(event);
+      assert(!event.defaultPrevented && evaluate('tasks.length === 0'), 'Submissão tratada');
+    });
+    await check('BUG-05', 'Laço excede o array vazio e interrompe contador após uma tarefa', async () => {
+      await fixture([idFix]);
+      let emptyError = false;
+      try { evaluate('renderTasks()'); } catch (e) { emptyError = e.name === 'TypeError'; }
+      assert(emptyError, 'Lista vazia não provocou erro');
+      evaluate('tasks = [{text:"A",completed:true}]');
+      let populatedError = false;
+      try { evaluate('renderTasks()'); } catch (e) { populatedError = e.name === 'TypeError'; }
+      assert(populatedError && d.querySelectorAll('.task').length === 1, 'Renderização parcial não confirmada');
+      assert(d.getElementById('counter').textContent.endsWith('0'), 'Contador foi atualizado');
+    });
+    await check('BUG-06', 'toggleTask não altera completed', async () => {
+      await fixture([idFix, loopFix]); evaluate('tasks = [{text:"A",completed:false}]; toggleTask(0)');
+      assert(evaluate('tasks[0].completed === false'), 'Estado alterado');
+    });
+    await check('BUG-07', 'Excluir a primeira de três tarefas remove também a segunda', async () => {
+      await fixture([idFix, loopFix]);
+      evaluate('tasks = [{text:"A",completed:false},{text:"B",completed:false},{text:"C",completed:false}]; deleteTask(0)');
+      assert(evaluate('tasks.length === 1 && tasks[0].text === "C"'), 'Exclusão dupla não confirmada');
+    });
+    await check('BUG-08', 'Contador mostra concluídas em vez de pendentes', async () => {
+      await fixture(); evaluate('tasks = [{completed:false},{completed:false},{completed:true}]; updateCounter()');
+      assert(d.getElementById('counter').textContent === 'Tarefas pendentes: 1', 'Contagem diferente da evidência');
+    });
+    await check('BUG-09', 'padding sem unidade é descartado e resulta em 0px', async () => {
+      await fixture(); measurements.padding = w.getComputedStyle(d.querySelector('.container')).padding;
+      assert(measurements.padding === '0px' && !w.CSS.supports('padding', '24'), 'Padding aceito');
+    });
+    await check('BUG-10', 'Cor graay inválida é ignorada em tarefa concluída', async () => {
+      await fixture([idFix, loopFix]); evaluate('tasks = [{text:"A",completed:true}]; renderTasks()');
+      measurements.completedColor = w.getComputedStyle(d.querySelector('.task span')).color;
+      assert(!w.CSS.supports('color', 'graay') && measurements.completedColor === 'rgb(0, 0, 0)', 'Cor inválida não confirmada');
+    });
+    await check('BUG-11', 'Viewport ausente; coleta de dimensões em 320 e 375 pixels CSS', async () => {
+      await fixture(); assert(!d.querySelector('meta[name="viewport"]'), 'Viewport presente');
+      measurements.narrowWidths = [];
+      for (const width of [320, 375]) {
+        frame.style.width = `${width}px`;
+        await new Promise(resolve => setTimeout(resolve, 30));
+        const actual = d.documentElement.scrollWidth;
+        measurements.narrowWidths.push({ viewport: d.documentElement.clientWidth, content: actual });
+      }
+    });
+    await check('BUG-12', 'Texto longo sem espaços transborda a área de tarefas', async () => {
+      await fixture([idFix, loopFix]); evaluate('tasks = [{text:"W".repeat(150),completed:false}]; renderTasks()');
+      const container = d.querySelector('.container').getBoundingClientRect();
+      const span = d.querySelector('.task span').getBoundingClientRect();
+      measurements.longText = { containerWidth: container.width, textWidth: span.width };
+      assert(span.right > container.right, 'Texto não transbordou');
+    });
+    await check('BUG-13', 'Campo depende de placeholder e não possui rótulo persistente', async () => {
+      await fixture(); const input = d.getElementById('task-input');
+      assert(input.labels.length === 0 && !input.getAttribute('aria-label') && !input.getAttribute('aria-labelledby'), 'Rótulo explícito presente');
+    });
+    await check('BUG-14', 'Controle de conclusão é span sem foco ou semântica interativa', async () => {
+      await fixture([idFix, loopFix]); evaluate('tasks = [{text:"A",completed:false}]; renderTasks()');
+      const span = d.querySelector('.task span');
+      assert(span.tabIndex === -1 && !span.hasAttribute('role'), 'Span interativo');
+      span.focus(); assert(d.activeElement !== span, 'Span recebeu foco');
+    });
+    await check('BUG-15', 'Atualização do contador não possui região de status', async () => {
+      await fixture(); const counter = d.getElementById('counter');
+      assert(!counter.hasAttribute('aria-live') && !counter.hasAttribute('role'), 'Status presente');
+    });
+    await check('BUG-16', 'Contraste dos textos dos botões fica abaixo de 4,5:1', async () => {
+      measurements.contrast = { add: contrast('ffffff', '4caf50'), delete: contrast('ffffff', 'e74c3c') };
+      assert(measurements.contrast.add < 4.5 && measurements.contrast.delete < 4.5, 'Contraste suficiente');
+    });
+    await check('SOL-01', 'Correções funcionais simuladas permitem incluir, concluir, reabrir e excluir', async () => {
+      await fixture(functionalFixes); add('A'); add('B'); add('C');
+      assert(evaluate('tasks.length === 3') && d.getElementById('counter').textContent.endsWith('3'), 'Inclusão/contador');
+      d.querySelector('.task span').click();
+      assert(evaluate('tasks[0].completed') && d.getElementById('counter').textContent.endsWith('2'), 'Conclusão');
+      d.querySelector('.task span').click(); assert(!evaluate('tasks[0].completed'), 'Reabertura');
+      d.querySelector('.delete-btn').click();
+      assert(evaluate('tasks.map(t => t.text).join("") === "BC"'), 'Exclusão');
+      d.querySelector('.delete-btn').click(); d.querySelector('.delete-btn').click();
+      assert(evaluate('tasks.length === 0') && d.getElementById('counter').textContent.endsWith('0'), 'Lista vazia');
+      assert(w.qaErrors.length === 0, w.qaErrors.join('; '));
+    });
+    await check('SOL-02', 'Correções simuladas rejeitam vazio e espaços; clicar no campo não inclui', async () => {
+      await fixture(functionalFixes); add(''); add('   ');
+      d.getElementById('task-input').value = 'A'; d.getElementById('task-input').click();
+      assert(evaluate('tasks.length === 0'), 'Entrada indevida aceita');
+    });
+    await check('CTRL-01', 'Renderização existente trata HTML como texto, sem criar elemento injetado', async () => {
+      await fixture(functionalFixes); add('<img src=x onerror="window.qaInjected=true">');
+      assert(!d.querySelector('.task img') && !w.qaInjected, 'HTML interpretado');
+      assert(d.querySelector('.task span').textContent.startsWith('<img'), 'Texto não preservado');
+    });
+  } catch (error) {
+    results.push({ id: 'SETUP', description: 'Preparação', status: 'FAIL', detail: error.message });
+  }
+  const failures = results.filter(result => result.status === 'FAIL').length;
+  report.dataset.failures = String(failures);
+  report.textContent = `${results.length - failures}/${results.length} verificações confirmadas.\n` +
+    results.map(result => `${result.status} ${result.id}: ${result.description}${result.detail ? ' — ' + result.detail : ''}`).join('\n') +
+    '\n\nMEDIÇÕES\n' + JSON.stringify(measurements, null, 2);
+  document.title = failures ? 'FAIL — QA tarefas' : 'PASS — evidências QA tarefas';
+})();
+</script>
+</html>
