@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Jogue forca com temas de História, Geografia, Sociologia e Filosofia. Aprenda com dicas e use cartas para vencer." />
+  <title>Forca Temática — Desafio do Conhecimento</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-theme="geografia">
+  <main class="layout" data-theme="geografia">
+    <aside class="ranking-panel parchment">
+      <div class="panel-head">
+        <h2>Ranking</h2>
+        <p>Vitórias neste navegador: menos erros, depois menor tempo e mais pontos.</p>
+      </div>
+      <ol id="rankingList"></ol>
+    </aside>
+
+    <section class="game-panel parchment">
+      <header class="topbar">
+        <div class="title-wrap">
+          <h1>Jogo da Forca</h1>
+          <p class="subtitle">Uma expedição pelo conhecimento</p>
+        </div>
+        <div class="hud">
+          <span><strong>Jogador:</strong> <span id="hudPlayer">-</span></span>
+          <span><strong>Tema:</strong> <span id="hudTheme">-</span></span>
+          <span><strong>Tempo:</strong> <span id="hudTime">00:00</span></span>
+          <span><strong>Erros:</strong> <span id="hudErrors">0</span></span>
+          <span><strong>Combo:</strong> <span id="hudCombo">0</span></span>
+          <span><strong>Pontos:</strong> <span id="hudScore">0</span></span>
+        </div>
+      </header>
+
+      <section class="controls">
+        <label for="playerName">Nome</label>
+        <input id="playerName" type="text" maxlength="18" placeholder="Digite seu nome" autocomplete="nickname" />
+
+        <label for="themeSelect">Tema</label>
+        <select id="themeSelect">
+          <option value="historia">História</option>
+          <option value="geografia" selected>Geografia</option>
+          <option value="sociologia">Sociologia</option>
+          <option value="filosofia">Filosofia</option>
+        </select>
+
+        <button id="startButton" class="btn primary" type="button">Iniciar</button>
+        <button id="soundToggleButton" class="btn" type="button" aria-pressed="false">Som: Desligado</button>
+      </section>
+
+      <section class="board">
+        <div class="scene" id="scene" data-errors="0">
+          <div class="scene-status">
+            <span id="sceneErrorText">Erros: 0/6</span>
+            <span id="sceneLifeText">Tentativas restantes: 6</span>
+          </div>
+          <svg class="scene-art" viewBox="0 0 400 250" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="timber" x1="0" y1="0" x2="1" y2="0">
+                <stop stop-color="#95613d" />
+                <stop offset="0.5" stop-color="#bd8754" />
+                <stop offset="1" stop-color="#875333" />
+              </linearGradient>
+              <linearGradient id="jacket" x1="0" y1="0" x2="0" y2="1">
+                <stop stop-color="#eacb87" />
+                <stop offset="1" stop-color="#c89c57" />
+              </linearGradient>
+            </defs>
+            <ellipse cx="203" cy="234" rx="119" ry="8" fill="#5a4027" opacity="0.1" />
+            <g class="gallows" stroke="#65432d" stroke-width="3" stroke-linejoin="round">
+              <path d="M133 87 L183 37 L171 29 L123 75 Z" fill="url(#timber)" />
+              <rect x="118" y="21" width="19" height="207" rx="4" fill="url(#timber)" />
+              <rect x="111" y="19" width="168" height="20" rx="5" fill="url(#timber)" />
+              <path d="M127 222 L102 232 M129 222 L153 232" fill="none" stroke-width="10" stroke-linecap="round" />
+              <rect x="87" y="228" width="222" height="8" rx="4" fill="#95613d" />
+              <path d="M124 49 V207 M145 26 H232" stroke="#e1b67a" stroke-width="2" opacity="0.6" />
+              <circle cx="127" cy="29" r="3" fill="#e5c696" />
+              <path d="M249 20 V57" fill="none" stroke="#ac834a" stroke-width="6" />
+              <path d="M244 23 L254 27 M244 30 L254 34 M244 37 L254 41" fill="none" stroke="#715233" stroke-width="2.5" stroke-linecap="round" />
+            </g>
+            <g class="hangman-figure" id="hangmanFigure" stroke="#59402c" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+              <g class="part head" data-part="1">
+                <circle cx="226" cy="94" r="5" fill="#e5b180" />
+                <circle cx="272" cy="94" r="5" fill="#e5b180" />
+                <path d="M227 82 Q249 70 271 82 V97 Q269 118 249 120 Q229 118 227 97 Z" fill="#f2c797" />
+                <path d="M228 83 V92 M270 83 V92" stroke="#795133" stroke-width="5" />
+                <ellipse cx="240" cy="96" rx="2" ry="3" fill="#59402c" stroke="none" />
+                <ellipse cx="258" cy="96" rx="2" ry="3" fill="#59402c" stroke="none" />
+                <path d="M248 99 L246 104 H250 M243 109 Q249 113 255 109" fill="none" stroke-width="1.8" />
+                <path d="M220 77 L227 57 Q232 50 244 55 L250 59 L257 54 Q269 52 272 77 Z" fill="#cfa35e" />
+                <path d="M223 69 Q248 75 270 69 L272 78 H220 Z" fill="#7d5335" />
+                <path d="M212 79 Q247 71 282 80 Q287 89 269 89 Q245 83 220 89 Q209 88 212 79 Z" fill="#dfb774" />
+              </g>
+              <g class="part body" data-part="2">
+                <path d="M241 118 V128 H257 V118" fill="#e5b180" />
+                <path d="M233 125 L240 122 L249 129 L258 122 L266 126 L270 174 Q249 181 228 174 Z" fill="url(#jacket)" />
+                <path d="M239 124 L242 138 L249 130 L256 138 L260 124 M249 135 V170" fill="none" stroke="#937042" stroke-width="2" />
+                <path d="M233 143 H242 V152 H233 Z M256 143 H265 V152 H256 Z" fill="#d7b16e" stroke-width="1.5" />
+                <path d="M229 169 H269 V176 H229 Z" fill="#805536" />
+                <rect x="245" y="169" width="9" height="7" rx="1" fill="#e9c478" stroke-width="1.5" />
+                <path d="M235 126 L266 166" stroke="#946b41" stroke-width="5" />
+                <rect x="260" y="158" width="15" height="17" rx="3" fill="#b8864b" />
+              </g>
+              <g class="part arm-left" data-part="3">
+                <path d="M233 126 Q226 122 222 132 L211 151 L221 158 L234 140" fill="url(#jacket)" />
+                <path d="M212 152 L207 161 Q204 168 210 171 Q215 173 218 166 L222 158" fill="#f2c797" />
+                <path d="M211 150 L222 157" stroke="#a8824b" stroke-width="4" />
+              </g>
+              <g class="part arm-right" data-part="4">
+                <path d="M266 126 Q273 122 278 132 L288 151 L279 158 L266 140" fill="url(#jacket)" />
+                <path d="M287 152 L292 161 Q295 168 289 171 Q284 173 281 166 L278 158" fill="#f2c797" />
+                <path d="M278 157 L289 150" stroke="#a8824b" stroke-width="4" />
+              </g>
+              <g class="part leg-left" data-part="5">
+                <path d="M230 177 H249 L243 205 L230 203 Z" fill="#758474" />
+                <path d="M230 200 L244 202 L241 219 Q233 223 221 220 V215 L228 211 Z" fill="#79543c" />
+                <path d="M224 220 H240 M230 207 L237 208" fill="none" stroke="#c79d70" stroke-width="2" />
+              </g>
+              <g class="part leg-right" data-part="6">
+                <path d="M250 177 H268 L268 203 L255 205 Z" fill="#758474" />
+                <path d="M255 202 L268 200 L271 211 L278 215 V220 Q266 223 258 219 Z" fill="#79543c" />
+                <path d="M259 220 H275 M262 208 L269 207" fill="none" stroke="#c79d70" stroke-width="2" />
+              </g>
+            </g>
+          </svg>
+          <p id="sceneGuide" class="scene-guide">Escolha o tema e clique em Iniciar.</p>
+        </div>
+        <div class="danger-meter" aria-label="Nível de risco">
+          <span>Risco</span>
+          <div id="dangerTrack" class="danger-track" role="progressbar" aria-label="Erros cometidos" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0">
+            <div id="dangerFill" class="danger-fill"></div>
+          </div>
+        </div>
+
+        <p class="word" id="wordDisplay" aria-label="Aguardando início da rodada">_ _ _ _ _</p>
+        <p id="wordProgress" class="word-progress">6 tentativas • 3 cartas por rodada</p>
+        <p class="hint" id="hintDisplay">Dica: escolha o tema e inicie a rodada.</p>
+        <p class="message" id="message" role="status" aria-live="polite" aria-atomic="true">Use o teclado físico ou virtual para jogar.</p>
+
+        <div class="innovation-row">
+          <button id="revealButton" class="btn card-btn" type="button" disabled title="Revela uma letra, sem ganhar pontos ou combo.">Revelar letra</button>
+          <button id="cullButton" class="btn card-btn" type="button" disabled title="Retira até 3 letras incorretas sem perder tentativas.">Eliminar 3 letras</button>
+          <button id="shieldButton" class="btn card-btn" type="button" disabled title="Protege uma tentativa no próximo erro; desconta 10 pontos.">Ativar escudo</button>
+        </div>
+
+        <div id="keyboard" class="keyboard" role="group" aria-label="Letras disponíveis"></div>
+        <details class="rules">
+          <summary>Como jogar e pontuar</summary>
+          <p>Descubra a palavra antes de cometer 6 erros. Clique nas letras ou use o teclado físico. Acentos e cedilha são aceitos: A revela Á, Ã e Â; C revela Ç.</p>
+          <p>Cada carta pode ser usada uma vez por rodada. Revelar não gera pontos nem combo; eliminar retira até 3 letras incorretas; o escudo bloqueia o próximo erro.</p>
+          <p>Acerto: 40 pontos + 8 por acerto seguido (combo). Erro: −35 pontos e fim do combo. Com escudo: −10 pontos e fim do combo. A pontuação nunca fica negativa. Na vitória, você recebe até 240 pontos pela rapidez, 22 por tentativa restante e 16 por letra do melhor combo.</p>
+        </details>
+      </section>
+    </section>
+  </main>
+
+  <audio id="bgMusic" loop preload="none">
+    <source src="Indiana Jones.mp3" type="audio/mpeg" />
+  </audio>
+
+  <div id="resultModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalText">
+    <div class="modal-card">
+      <h3 id="modalTitle">Resultado</h3>
+      <p id="modalText"></p>
+      <div class="modal-actions">
+        <button id="playAgainButton" class="btn primary" type="button">Jogar novamente</button>
+        <button id="closeModalButton" class="btn" type="button">Ver tabuleiro</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="480" viewBox="0 0 600 480" fill="none">
+  <g stroke="#c9dfbd" stroke-width="1" opacity=".07">
+    <path d="M0 80H600M0 160H600M0 240H600M0 320H600M0 400H600M100 0V480M200 0V480M300 0V480M400 0V480M500 0V480"/>
+  </g>
+  <g stroke="#d5dfb9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".25">
+    <g transform="translate(95 118) rotate(-15)">
+      <circle r="59"/><ellipse rx="25" ry="59"/>
+      <path d="M-59 0H59M-51-29Q0-14 51-29M-51 29Q0 14 51 29M0-59V59"/>
+      <path d="M-29-68A74 74 0 0 1 30 68M0 74V89M-28 91H28" stroke-width="3"/>
+    </g>
+    <g transform="translate(465 345)">
+      <circle r="69"/><circle r="60" stroke-dasharray="1 9"/>
+      <path d="M0-81V-72M0 72V81M-81 0H-72M72 0H81M-50-50L-42-42M42 42L50 50M50-50L42-42M-42 42L-50 50"/>
+      <path d="M0-54L12-12L54 0L12 12L0 54L-12 12L-54 0L-12-12Z"/>
+      <path d="M0-54V0H54M0 54V0H-54"/>
+      <path d="M0-54L12-12L0 0Z M0 54L-12 12L0 0Z" fill="#d5dfb9" stroke="none" opacity=".55"/>
+    </g>
+    <path d="M275 98L317 82L355 99L392 83V163L355 179L317 162L275 178ZM317 82V162M355 99V179"/>
+    <path d="M291 141Q310 108 331 133T377 113" stroke-dasharray="3 6"/>
+    <path d="M47 379L84 321L112 364L134 335L170 388H42M70 343L84 354L96 340M122 353L134 361L144 349"/>
+  </g>
+  <path d="M185 225C245 181 226 293 310 249S391 209 412 237" stroke="#d5dfb9" stroke-width="2" stroke-dasharray="4 9" opacity=".17"/>
+</svg>
