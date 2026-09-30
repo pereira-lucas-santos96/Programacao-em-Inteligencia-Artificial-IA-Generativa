@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#111512" />
+  <meta name="description" content="Encontre os pares e explore os mistérios do Egito em um jogo de memória para até três jogadores." />
+  <title>Templo da Memória · Deuses do Egito</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="catalog.js" defer></script>
+  <script src="audio.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#gameBoard">Ir para o tabuleiro</a>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Templo da Memória, início"><span class="brand-mark" aria-hidden="true">☥</span><span>TEMPLO <span class="brand-light">DA MEMÓRIA</span><small>UMA EXPEDIÇÃO AO ANTIGO EGITO</small></span></a>
+      <button id="settingsBtn" class="secondary-btn" type="button">⚙ Configurar jogo</button>
+    </header>
+    <main>
+      <section class="hero" aria-labelledby="pageTitle">
+        <div><p class="eyebrow">OBSERVE. LEMBRE. DESCUBRA.</p><h1 id="pageTitle">Os deuses guardam<br /><em>grandes memórias.</em></h1><p class="subtitle">Encontre os pares sagrados em uma jornada de atenção<br class="desktop-break" /> e descoberta. Cada carta revela um novo mistério.</p></div>
+        <div class="hero-art" aria-hidden="true"><div class="sun"></div><div class="pyramid pyramid-back"></div><div class="pyramid"></div><span class="art-caption">30°02′ N &nbsp; 31°13′ E &nbsp; · &nbsp; GIZÉ, EGITO</span></div>
+      </section>
+      <div class="game-layout">
+        <aside class="sidebar" aria-label="Configurações e placar">
+          <section class="panel setup-panel">
+            <p class="eyebrow">SUA EXPEDIÇÃO</p><h2>Prepare o desafio</h2>
+            <form id="setupForm">
+              <label for="difficulty">Dificuldade</label>
+              <select id="difficulty"><option value="6">Explorador · 6 pares</option><option value="8">Guardião · 8 pares</option><option value="10" selected>Faraó · 10 pares</option></select>
+              <label for="playerCount">Quem vai jogar?</label>
+              <select id="playerCount"><option value="1">Solo · supere seu recorde</option><option value="2" selected>Duelo · 2 jogadores</option><option value="3">Grupo · 3 jogadores</option></select>
+              <div class="name-fields">
+                <label class="name-field"><span class="player-dot dot-1"></span><span class="sr-only">Nome do jogador 1</span><input id="player1Name" type="text" maxlength="14" value="Jogador 1" autocomplete="off" /></label>
+                <label class="name-field"><span class="player-dot dot-2"></span><span class="sr-only">Nome do jogador 2</span><input id="player2Name" type="text" maxlength="14" value="Jogador 2" autocomplete="off" /></label>
+                <label class="name-field" hidden><span class="player-dot dot-3"></span><span class="sr-only">Nome do jogador 3</span><input id="player3Name" type="text" maxlength="14" value="Jogador 3" autocomplete="off" /></label>
+              </div>
+              <button id="restartBtn" class="primary-btn" type="submit"><span aria-hidden="true">↻</span> Nova expedição</button>
+              <p class="field-note">As configurações são aplicadas ao iniciar.</p>
+            </form>
+          </section>
+          <section class="panel score-panel"><div class="section-label"><h2>Placar da expedição</h2><span aria-hidden="true">⚑</span></div><div id="playersBoard" class="players-board"></div></section>
+          <section class="panel sound-panel"><div class="section-label"><h2>Atmosfera do templo</h2><button id="soundToggleBtn" class="sound-btn" type="button" aria-pressed="false">Som desligado</button></div><label class="sr-only" for="soundProfile">Trilha sonora</label><select id="soundProfile"><option value="ritual">Ritual · percussão suave</option><option value="misterio">Mistério · sons profundos</option><option value="sereno">Sereno · concentração</option></select><div class="volume-row"><label for="volumeSlider">Volume</label><input id="volumeSlider" type="range" min="0" max="100" value="40" /><output id="volumeValue" for="volumeSlider">40%</output></div></section>
+          <div class="tip"><span aria-hidden="true">✧</span><p><strong>Um olhar atento vale ouro.</strong>Encontrou um par? Jogue outra vez. Errou? A vez passa para o próximo explorador.</p></div>
+        </aside>
+        <section class="play-area" aria-label="Partida">
+          <div class="hud" aria-label="Estatísticas da partida">
+            <div class="stat"><span class="stat-label">PARES REVELADOS</span><strong><span id="matches">0</span><small> / <span id="totalPairs">10</span></small></strong></div>
+            <div class="stat"><span class="stat-label">MOVIMENTOS</span><strong id="moves">0</strong></div>
+            <div class="stat"><span class="stat-label">TEMPO</span><strong id="timer">00:00</strong></div>
+            <div class="stat"><span class="stat-label">PRECISÃO</span><strong id="accuracy">—</strong></div>
+          </div>
+          <div class="board-panel">
+            <div class="board-heading"><div><p class="eyebrow" id="levelLabel">NÍVEL FARAÓ</p><h2>O templo dos pares</h2></div><button id="hintBtn" class="secondary-btn" type="button" title="Revela as cartas por 2 segundos. Uma vez por partida."><span aria-hidden="true">✧</span> Revelar · 1 dica</button></div>
+            <div class="turn-row"><span><span class="live-dot" aria-hidden="true"></span> Vez de <strong id="currentPlayer">Jogador 1</strong></span><span id="boardCount">20 cartas · 10 pares</span></div>
+            <div id="gameBoard" class="board" tabindex="-1" aria-label="Tabuleiro do jogo da memória"></div>
+            <div class="progress-row"><span id="progressLabel">Seu caminho está só começando</span><span id="progressValue">0%</span></div><progress id="gameProgress" max="10" value="0" aria-label="Pares encontrados"></progress>
+            <p id="message" class="message" role="status">Escolha uma carta para começar sua expedição.</p>
+          </div>
+          <div class="under-board"><span>✧ <span id="recordLabel">Recordes disponíveis no modo solo</span></span><span>Feito para exercitar a sua memória.</span></div>
+        </section>
+      </div>
+    </main>
+    <footer><span>TEMPLO DA MEMÓRIA</span><span>Uma pausa no tempo. Um desafio para a mente.</span><span>EGITO · COLEÇÃO 01</span></footer>
+  </div>
+  <dialog id="settingsModal" aria-label="Configurar jogo"><button id="closeSettingsBtn" class="close-btn" type="button" aria-label="Fechar configurações">×</button><div id="settingsContent"></div></dialog>
+  <dialog id="finishModal" aria-labelledby="finishTitle"><div class="modal-card"><button id="closeModalBtn" class="close-btn" type="button" aria-label="Fechar resultado">×</button><p class="modal-symbol" aria-hidden="true">☥</p><p class="eyebrow">TODOS OS MISTÉRIOS REVELADOS</p><h2 id="finishTitle">Expedição concluída!</h2><p id="finishText"></p><div id="finishStats" class="finish-stats"></div><button id="playAgainBtn" class="primary-btn" type="button">Explorar novamente <span aria-hidden="true">→</span></button></div></dialog>
+  <noscript><p class="noscript">Ative o JavaScript no navegador para jogar.</p></noscript>
+</body>
+</html>
