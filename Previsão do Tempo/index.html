@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#edf3ef">
+  <meta name="description" content="Acompanhe o tempo na sua cidade, com condições atuais, previsão para os próximos dias e cenários animados.">
+  <title>Brisa — Previsão do tempo</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles/dashboard.css">
+  <script defer src="src/domain/weather.js"></script>
+  <script defer src="src/services/open-meteo.js"></script>
+  <script defer src="src/services/preferences.js"></script>
+  <script defer src="src/ui/view.js"></script>
+  <script defer src="src/app.js"></script>
+</head>
+<body data-weather="clear" data-night="false" data-view="current" data-theme="light">
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <div class="ambient" aria-hidden="true"></div>
+  <header class="site-header shell">
+    <a class="brand" href="./index.html" aria-label="Brisa, página inicial"><span class="brand-mark" aria-hidden="true">☀</span>brisa<span class="brand-dot">.</span></a>
+    <span class="header-caption">Um olhar para o céu. Um plano para o dia.</span>
+    <span class="source-badge"><span></span> Dados da Open-Meteo</span>
+    <div class="display-controls">
+      <div class="unit-switch" role="group" aria-label="Unidade de temperatura">
+        <button type="button" data-unit="celsius" aria-pressed="true" aria-label="Graus Celsius">°C</button>
+        <button type="button" data-unit="fahrenheit" aria-pressed="false" aria-label="Graus Fahrenheit">°F</button>
+      </div>
+      <button id="theme-button" class="theme-button" type="button" aria-label="Ativar modo escuro" aria-pressed="false"><span data-icon="moon" aria-hidden="true"></span><span id="theme-label">Modo escuro</span></button>
+    </div>
+  </header>
+
+  <main id="main" class="shell">
+    <section class="intro" aria-labelledby="page-title">
+      <div><p class="eyebrow">O TEMPO, ONDE VOCÊ ESTIVER</p><h1 id="page-title">Como está o céu por aí?</h1><p class="intro-copy">Encontre sua cidade e deixe o clima contar a história.</p></div>
+      <div class="today"><span id="today-date"></span><span>Um novo dia, novas possibilidades.</span></div>
+    </section>
+
+    <section class="location-section" aria-label="Escolher localidade">
+      <form id="search-form" class="search-form" role="search" autocomplete="off">
+        <span class="search-icon" data-icon="search" aria-hidden="true"></span>
+        <label class="sr-only" for="city-search">Buscar cidade</label>
+        <input id="city-search" type="search" placeholder="Busque uma cidade…" maxlength="100" aria-controls="search-results" aria-describedby="search-help">
+        <button class="button primary" type="submit">Buscar cidade <span aria-hidden="true">↗</span></button>
+      </form>
+      <button id="geolocation-button" class="button location-button" type="button" aria-label="Usar minha localização"><span data-icon="locate" aria-hidden="true"></span><span>Usar minha localização</span></button>
+      <button id="history-button" class="button history-button" type="button" aria-label="Últimas cidades pesquisadas" aria-expanded="false" aria-controls="history-panel"><span data-icon="clock" aria-hidden="true"></span><span>Recentes</span></button>
+      <div id="search-panel" class="search-panel" hidden><p id="search-help" role="status" aria-live="polite"></p><ul id="search-results" aria-label="Cidades encontradas"></ul><div id="search-pagination" class="pagination" hidden></div></div>
+      <div id="history-panel" class="search-panel history-panel" hidden><div class="history-heading"><strong>Últimas cidades</strong><button id="clear-history" type="button">Limpar</button></div><p id="history-empty">As cidades consultadas aparecerão aqui.</p><ul id="history-results" aria-label="Histórico de cidades"></ul><div id="history-pagination" class="pagination" hidden></div></div>
+    </section>
+    <div class="quick-locations"><span>Explore também</span><button type="button" data-city="sao-paulo">São Paulo</button><button type="button" data-city="rio">Rio de Janeiro</button><button type="button" data-city="curitiba">Curitiba</button><button type="button" data-city="lisboa">Lisboa <span aria-hidden="true">↗</span></button></div>
+
+    <nav class="view-navigation" aria-label="Visualização do tempo"><div class="view-switch" role="group" aria-label="Período da previsão"><button type="button" data-view="current" aria-pressed="true">Agora</button><button type="button" data-view="daily" aria-pressed="false">7 dias</button><button type="button" data-view="hourly" aria-pressed="false">Por hora</button></div><span id="forecast-location" class="forecast-location">São Paulo</span><span id="loading-indicator" class="loading-indicator" role="status"><span class="spinner" aria-hidden="true"></span>Carregando clima…</span></nav>
+
+    <div id="notice" class="notice" role="status" aria-live="polite" hidden><span id="notice-text"></span><button id="retry-button" type="button" hidden>Tentar novamente</button></div>
+    <section id="weather-panel" aria-label="Condições da localidade" aria-busy="true">
+      <article id="current-card" class="current-card">
+        <div id="scene" class="scene" aria-hidden="true">
+          <div class="scene-stars"></div><div class="scene-sun"></div><div class="scene-moon"></div>
+          <div class="cloud cloud-one"></div><div class="cloud cloud-two"></div><div class="cloud cloud-three"></div>
+          <svg class="landscape" viewBox="0 0 1440 560" preserveAspectRatio="xMidYMax slice">
+            <defs><linearGradient id="mountainGradient" x2="0" y2="1"><stop stop-color="#7fa49b"/><stop offset="1" stop-color="#abc0a5"/></linearGradient><linearGradient id="nearGradient" x2="0" y2="1"><stop stop-color="#325f51"/><stop offset="1" stop-color="#173c34"/></linearGradient></defs>
+            <path class="mountain-far" d="M380 560 720 245Q748 220 776 250L890 350 1045 162Q1074 123 1110 160L1440 442V560Z" fill="url(#mountainGradient)"/>
+            <path d="m989 226 57-64q28-39 64-2l62 70-51-18-28 11-29-38-29 37-18-7Z" fill="#e1e8d5" opacity=".58"/>
+            <path class="hill-far" d="M0 455Q170 358 355 450T725 411Q960 277 1145 386T1440 355V560H0Z" fill="#709985"/>
+            <path class="hill-middle" d="M0 500Q195 420 400 491T847 440Q1090 341 1440 468V560H0Z" fill="#507c64"/>
+            <path class="hill-near" d="M0 544Q302 470 620 537T1169 470Q1320 419 1440 450V560H0Z" fill="url(#nearGradient)"/>
+            <g fill="#254c40"><path d="m1210 454 23-51h-13l22-47h-10l22-52 23 52h-10l22 47h-13l23 51h-37v34h-15v-34Z"/><path d="m1297 469 29-66h-16l27-60h-12l28-68 29 68h-12l27 60h-16l29 66h-47v43h-19v-43Z"/><path d="m1376 457 19-44h-10l18-39h-8l18-42 19 42h-8l18 39h-10l19 44h-30v27h-15v-27Z"/></g>
+          </svg>
+          <div class="scene-fog"></div><div id="particles" class="particles"></div><div class="scene-lightning"></div><div class="scene-shade"></div>
+        </div>
+        <div class="current-top"><span class="pill"><span class="live-dot"></span><span id="data-status">Consultando o céu</span></span><button id="animation-button" class="animation-button" type="button" aria-pressed="false"><span data-icon="pause" aria-hidden="true"></span><span id="animation-label">Pausar cenário</span></button></div>
+        <div class="current-content">
+          <p class="location-label"><span data-icon="pin" aria-hidden="true"></span><span id="location-region">Carregando localidade</span></p>
+          <h2 id="location-name">Só um instante…</h2>
+          <p id="location-date" class="location-date">Buscando as condições mais recentes</p>
+          <div class="temperature-line"><span id="current-temperature">—</span><span id="temperature-unit" class="temperature-unit">°C</span><span id="current-icon" class="hero-icon"></span></div>
+          <p id="current-description" class="current-description">Conectando com a Open-Meteo…</p>
+          <div class="temperature-details"><span id="feels-like">Sensação de —</span><span class="detail-divider"></span><span id="high-low">↑ — &nbsp; ↓ —</span></div>
+        </div>
+        <div class="current-bottom"><span id="scene-caption">O cenário acompanha o clima da cidade.</span><button id="refresh-button" type="button"><span data-icon="refresh" aria-hidden="true"></span><span id="updated-at">Atualizando…</span></button></div>
+      </article>
+
+      <div class="metrics" aria-label="Detalhes do tempo">
+        <article class="metric"><span class="metric-icon" data-icon="drop" aria-hidden="true"></span><div><h3>Umidade do ar</h3><p id="humidity">— <small>%</small></p><span id="humidity-description">Aguardando dados</span></div></article>
+        <article class="metric"><span class="metric-icon" data-icon="wind" aria-hidden="true"></span><div><h3>Vento</h3><p id="wind">— <small>km/h</small></p><span id="wind-direction">Aguardando dados</span></div></article>
+        <article class="metric"><span class="metric-icon" data-icon="rain" aria-hidden="true"></span><div><h3>Precipitação atual</h3><p id="precipitation">— <small>mm</small></p><span>Acumulado no intervalo atual</span></div></article>
+        <article class="metric"><span class="metric-icon" data-icon="sunset" aria-hidden="true"></span><div><h3>Pôr do sol</h3><p id="sunset">—</p><span id="sunrise">Horário local da cidade</span></div></article>
+      </div>
+
+      <div class="forecast-grid">
+        <section class="forecast-panel daily-panel" aria-labelledby="daily-title"><div class="section-heading"><div><p class="eyebrow">OLHANDO ADIANTE</p><h2 id="daily-title">Os próximos 7 dias</h2></div><span class="subtle-chip">Mín. / Máx. <span class="forecast-unit">°C</span></span></div><div id="daily-forecast" class="daily-forecast"><p class="placeholder">A previsão aparecerá aqui.</p></div></section>
+        <section class="forecast-panel hourly-panel" aria-labelledby="hourly-title"><div class="section-heading"><div><p class="eyebrow">PLANEJE SEU DIA</p><h2 id="hourly-title">Próximas horas</h2></div><span data-icon="clock" aria-hidden="true"></span></div><div id="hourly-forecast" class="hourly-forecast"><p class="placeholder">Buscando a previsão por hora.</p></div><div class="forecast-note"><span data-icon="info" aria-hidden="true"></span><p>O céu muda, a gente acompanha. Os dados são consultados automaticamente a cada 5 minutos.</p></div></section>
+      </div>
+    </section>
+    <p class="data-note">Condições atuais estimadas por modelos meteorológicos. Horários exibidos no fuso da localidade.</p>
+  </main>
+  <footer class="site-footer shell"><span class="footer-brand">brisa. <span>Viva o dia lá fora.</span></span><span>Dados: <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a> · Localidades: <a href="https://www.geonames.org/" target="_blank" rel="noopener noreferrer">GeoNames</a></span><span>Feito para acompanhar o seu dia <span class="footer-sun" aria-hidden="true">☀</span></span></footer>
+  <noscript><p class="notice">Ative o JavaScript no navegador para consultar o clima.</p></noscript>
+</body>
+</html>
