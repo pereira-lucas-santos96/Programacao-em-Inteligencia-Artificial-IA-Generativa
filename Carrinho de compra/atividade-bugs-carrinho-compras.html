@@ -1,0 +1,408 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loja da Turma | Carrinho</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif']
+          },
+          boxShadow: {
+            soft: '0 12px 32px -12px rgba(0,0,0,.22)'
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-white text-zinc-900 antialiased">
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-zinc-200">
+    <div class="bg-zinc-50 border-b border-zinc-200">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-end gap-3 text-xs text-zinc-600">
+        <a href="#" class="hover:text-black transition-colors">Ajuda</a>
+        <span class="text-zinc-300">|</span>
+        <a href="#" class="hover:text-black transition-colors">Conta</a>
+        <span class="text-zinc-300">|</span>
+        <a href="#" class="hover:text-black transition-colors">Entrar</a>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2">
+        <span class="inline-block h-7 w-7 rounded-full bg-black"></span>
+        <span class="text-lg font-black tracking-tight">LOJA DA TURMA</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+        <a href="#" class="hover:text-zinc-500 transition-colors">Lançamentos</a>
+        <a href="#" class="hover:text-zinc-500 transition-colors">Homens</a>
+        <a href="#" class="hover:text-zinc-500 transition-colors">Mulheres</a>
+        <a href="#" class="hover:text-zinc-500 transition-colors">Infantil</a>
+      </nav>
+
+      <div class="flex items-center gap-2">
+        <button class="p-2 rounded-full hover:bg-zinc-100 transition-colors" aria-label="Buscar">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m1.35-5.15a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </button>
+        <button class="p-2 rounded-full hover:bg-zinc-100 transition-colors" aria-label="Favoritos">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0 7.5-9 12-9 12s-9-4.5-9-12a5.25 5.25 0 019-3.75A5.25 5.25 0 0121 8.25z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="relative min-h-[56vh] overflow-hidden">
+      <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1950&q=80" alt="Coleção casual com roupas e acessórios" class="absolute inset-0 h-full w-full object-cover" />
+      <div class="absolute inset-0 bg-black/40"></div>
+      <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 min-h-[56vh] flex items-end pb-12">
+        <div class="max-w-xl text-white">
+          <p class="text-xs uppercase tracking-[0.2em] text-zinc-200">Coleção Casual e Acessórios</p>
+          <h1 class="mt-3 text-4xl sm:text-5xl font-black uppercase leading-tight tracking-tight">Essenciais para o dia a dia</h1>
+          <p class="mt-4 text-zinc-100 text-sm sm:text-base">Monte seu kit com caneca, camiseta e mochila, aplique cupom e acompanhe o total em tempo real.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-10 sm:py-14">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2">
+          <div class="flex items-end justify-between mb-6">
+            <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Produtos em Destaque</h2>
+            <span class="text-sm text-zinc-500">Adicione ao carrinho</span>
+          </div>
+
+          <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+            <article class="group rounded-2xl overflow-hidden border border-zinc-200 hover:shadow-soft transition-all duration-300 bg-white">
+              <div class="aspect-square bg-gray-100 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80" alt="Caneca de cerâmica sobre mesa" class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div class="p-4">
+                <p class="text-xs font-semibold uppercase tracking-wider text-orange-600">Casa e rotina</p>
+                <h3 class="mt-1 text-base font-bold">Caneca</h3>
+                <p class="text-sm text-zinc-500">Hidratação</p>
+                <div class="mt-4 flex items-center justify-between gap-3">
+                  <span class="text-sm font-semibold">R$ 25,00</span>
+                  <button class="add-btn rounded-full bg-black text-white px-4 py-2 text-xs font-semibold hover:bg-zinc-800 transition-colors" data-name="Caneca" data-price="25">Adicionar</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="group rounded-2xl overflow-hidden border border-zinc-200 hover:shadow-soft transition-all duration-300 bg-white">
+              <div class="aspect-square bg-gray-100 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80" alt="Camiseta" class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div class="p-4">
+                <p class="text-xs font-semibold uppercase tracking-wider text-orange-600">Essencial</p>
+                <h3 class="mt-1 text-base font-bold">Camiseta</h3>
+                <p class="text-sm text-zinc-500">Vestuário</p>
+                <div class="mt-4 flex items-center justify-between gap-3">
+                  <span class="text-sm font-semibold">R$ 60,00</span>
+                  <button class="add-btn rounded-full bg-black text-white px-4 py-2 text-xs font-semibold hover:bg-zinc-800 transition-colors" data-name="Camiseta" data-price="60">Adicionar</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="group rounded-2xl overflow-hidden border border-zinc-200 hover:shadow-soft transition-all duration-300 bg-white">
+              <div class="aspect-square bg-gray-100 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1577733966973-d680bffd2e80?auto=format&fit=crop&w=900&q=80" alt="Mochila" class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div class="p-4">
+                <p class="text-xs font-semibold uppercase tracking-wider text-zinc-700">Organização</p>
+                <h3 class="mt-1 text-base font-bold">Mochila</h3>
+                <p class="text-sm text-zinc-500">Bolsas</p>
+                <div class="mt-4 flex items-center justify-between gap-3">
+                  <span class="text-sm font-semibold">R$ 120,00</span>
+                  <button class="add-btn rounded-full bg-black text-white px-4 py-2 text-xs font-semibold hover:bg-zinc-800 transition-colors" data-name="Mochila" data-price="120">Adicionar</button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <aside class="lg:col-span-1">
+          <div class="rounded-2xl border border-zinc-200 p-5 sm:p-6 bg-zinc-50 lg:sticky lg:top-24">
+            <div class="flex items-center justify-between">
+              <h2 class="text-xl font-bold tracking-tight">Seu Carrinho</h2>
+              <span id="cart-count" class="text-xs font-semibold bg-zinc-200 text-zinc-700 px-2.5 py-1 rounded-full">0 itens</span>
+            </div>
+
+            <div id="cart-items" class="mt-5 space-y-2 min-h-16"></div>
+
+            <div class="mt-5 border-t border-zinc-200 pt-4 space-y-2 text-sm">
+              <div class="flex items-center justify-between">
+                <span class="text-zinc-600">Subtotal</span>
+                <span id="subtotal-value" class="font-medium">R$ 0,00</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-zinc-600">Desconto</span>
+                <span id="discount-value" class="font-medium">R$ 0,00</span>
+              </div>
+            </div>
+
+            <div class="coupon-area mt-5 flex gap-2">
+              <input type="text" id="coupon-input" placeholder="Cupom de desconto" maxlength="30" class="flex-1 rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-300" />
+              <button id="apply-coupon-btn" class="rounded-lg bg-black text-white px-4 py-2 text-sm font-semibold hover:bg-zinc-800 transition-colors">Aplicar</button>
+            </div>
+
+            <p class="discount-msg mt-2 text-xs min-h-5" id="discount-msg" aria-live="polite"></p>
+
+            <div class="total-line mt-4 pt-4 border-t border-zinc-200 flex items-center justify-between">
+              <span class="text-sm font-medium text-zinc-700">Total</span>
+              <span id="total-value" class="text-lg font-extrabold">R$ 0,00</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+  <footer class="bg-zinc-900 text-zinc-200">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div>
+        <h3 class="text-sm font-bold uppercase tracking-wide text-white mb-4">Encontre</h3>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#" class="hover:text-white transition-colors">Encontre uma Loja</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Cadastre-se</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-sm font-bold uppercase tracking-wide text-white mb-4">Ajuda</h3>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#" class="hover:text-white transition-colors">Status do Pedido</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Trocas e Devoluções</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-sm font-bold uppercase tracking-wide text-white mb-4">Sobre</h3>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#" class="hover:text-white transition-colors">Nossa História</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Inovação</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-sm font-bold uppercase tracking-wide text-white mb-4">Redes Sociais</h3>
+        <p class="text-sm text-zinc-400">Instagram • X • YouTube</p>
+      </div>
+    </div>
+    <div class="border-t border-zinc-700/60">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 text-xs text-zinc-400 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <p>© 2026 Loja da Turma. Todos os direitos reservados.</p>
+        <div class="flex items-center gap-4">
+          <a href="#" class="hover:text-zinc-200 transition-colors">Política de Privacidade</a>
+          <a href="#" class="hover:text-zinc-200 transition-colors">Termos de Uso</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const addButtons = document.querySelectorAll('.add-btn');
+    const cartItemsEl = document.getElementById('cart-items');
+    const cartCountEl = document.getElementById('cart-count');
+    const subtotalValueEl = document.getElementById('subtotal-value');
+    const discountValueEl = document.getElementById('discount-value');
+    const totalValueEl = document.getElementById('total-value');
+    const discountMsgEl = document.getElementById('discount-msg');
+    const couponInput = document.getElementById('coupon-input');
+    const applyCouponBtn = document.getElementById('apply-coupon-btn');
+
+    function formatCurrency(value) {
+      return value.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+      });
+    }
+
+    function setDiscountMessage(message, type) {
+      discountMsgEl.textContent = message;
+      discountMsgEl.className = 'discount-msg mt-2 text-xs min-h-5';
+
+      if (type === 'success') {
+        discountMsgEl.classList.add('text-emerald-700');
+      }
+
+      if (type === 'error') {
+        discountMsgEl.classList.add('text-red-700');
+      }
+
+      if (!type) {
+        discountMsgEl.classList.add('text-zinc-500');
+      }
+    }
+    if (!cartItemsEl || !totalValueEl || !discountMsgEl || !couponInput || !applyCouponBtn) {
+      console.error('Erro de inicialização: elementos obrigatórios da UI não foram encontrados.');
+    } else {
+      const VALID_COUPON = 'DESCONTO10';
+      let cart = [];
+      let discountRate = 0;
+
+      function updateCartItemQuantity(name, delta) {
+        const itemIndex = cart.findIndex(item => item.name === name);
+
+        if (itemIndex === -1) {
+          return;
+        }
+
+        cart[itemIndex].qty += delta;
+
+        if (cart[itemIndex].qty <= 0) {
+          cart.splice(itemIndex, 1);
+        }
+
+        renderCart();
+      }
+
+      addButtons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          const name = (btn.dataset.name || '').trim();
+          const price = Number(btn.dataset.price);
+
+          if (!name || !Number.isFinite(price) || price < 0) {
+            console.error('Produto inválido detectado no botão:', btn);
+            return;
+          }
+
+          const existing = cart.find(item => item.name === name);
+
+          if (existing) {
+            existing.qty += 1;
+          } else {
+            cart.push({ name: name, price: price, qty: 1 });
+          }
+
+          renderCart();
+        });
+      });
+
+      cartItemsEl.addEventListener('click', function(event) {
+        const target = event.target.closest('button[data-action][data-name]');
+
+        if (!target) {
+          return;
+        }
+
+        const name = (target.dataset.name || '').trim();
+        const action = target.dataset.action;
+
+        if (!name) {
+          return;
+        }
+
+        if (action === 'increase') {
+          updateCartItemQuantity(name, 1);
+        }
+
+        if (action === 'decrease') {
+          updateCartItemQuantity(name, -1);
+        }
+      });
+
+      applyCouponBtn.addEventListener('click', function() {
+        const code = couponInput.value.trim().toUpperCase();
+
+        if (code === VALID_COUPON) {
+          discountRate = 0.10;
+          setDiscountMessage('Cupom aplicado: 10% de desconto.', 'success');
+        } else {
+          discountRate = 0;
+          setDiscountMessage(code ? 'Cupom inválido.' : 'Informe um cupom.', 'error');
+        }
+
+        renderCart();
+      });
+
+      function renderCart() {
+        cartItemsEl.innerHTML = '';
+
+        if (cart.length === 0) {
+          const empty = document.createElement('p');
+          empty.className = 'text-sm text-zinc-500';
+          empty.textContent = 'Seu carrinho está vazio.';
+          cartItemsEl.appendChild(empty);
+        }
+
+        let subtotal = 0;
+        let totalItems = 0;
+
+        for (let i = 0; i < cart.length; i++) {
+          const item = cart[i];
+          const lineTotal = item.price * item.qty;
+          subtotal += lineTotal;
+          totalItems += item.qty;
+
+          const div = document.createElement('div');
+          div.className = 'cart-item flex items-center justify-between gap-3 rounded-lg bg-white border border-zinc-200 px-3 py-2';
+
+          const left = document.createElement('div');
+          left.className = 'flex flex-col';
+
+          const nameEl = document.createElement('span');
+          nameEl.className = 'text-sm text-zinc-800 font-medium';
+          nameEl.textContent = item.name;
+
+          const controls = document.createElement('div');
+          controls.className = 'mt-1 inline-flex items-center gap-2';
+
+          const decreaseBtn = document.createElement('button');
+          decreaseBtn.type = 'button';
+          decreaseBtn.dataset.action = 'decrease';
+          decreaseBtn.dataset.name = item.name;
+          decreaseBtn.className = 'h-6 w-6 rounded-full border border-zinc-300 text-zinc-700 hover:bg-zinc-100 transition-colors';
+          decreaseBtn.setAttribute('aria-label', 'Diminuir quantidade de ' + item.name);
+          decreaseBtn.textContent = '−';
+
+          const qtyEl = document.createElement('span');
+          qtyEl.className = 'text-xs font-semibold text-zinc-600 min-w-14 text-center';
+          qtyEl.textContent = 'Qtd: ' + item.qty;
+
+          const increaseBtn = document.createElement('button');
+          increaseBtn.type = 'button';
+          increaseBtn.dataset.action = 'increase';
+          increaseBtn.dataset.name = item.name;
+          increaseBtn.className = 'h-6 w-6 rounded-full border border-zinc-300 text-zinc-700 hover:bg-zinc-100 transition-colors';
+          increaseBtn.setAttribute('aria-label', 'Aumentar quantidade de ' + item.name);
+          increaseBtn.textContent = '+';
+
+          controls.appendChild(decreaseBtn);
+          controls.appendChild(qtyEl);
+          controls.appendChild(increaseBtn);
+
+          left.appendChild(nameEl);
+          left.appendChild(controls);
+
+          const right = document.createElement('div');
+          right.className = 'text-sm font-semibold whitespace-nowrap';
+          right.textContent = formatCurrency(lineTotal);
+
+          div.appendChild(left);
+          div.appendChild(right);
+          cartItemsEl.appendChild(div);
+        }
+
+        const discountValue = subtotal * discountRate;
+        const total = Math.max(0, subtotal - discountValue);
+
+        cartCountEl.textContent = totalItems + (totalItems === 1 ? ' item' : ' itens');
+        subtotalValueEl.textContent = formatCurrency(subtotal);
+        discountValueEl.textContent = formatCurrency(discountValue);
+        totalValueEl.textContent = formatCurrency(total);
+      }
+
+      setDiscountMessage('Use o cupom DESCONTO10 para 10% OFF.', null);
+      renderCart();
+    }
+  </script>
+</body>
+</html>

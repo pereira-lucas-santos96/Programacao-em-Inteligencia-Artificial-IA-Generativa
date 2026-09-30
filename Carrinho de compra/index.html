@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Store Minimal | Inspiração Nike</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f5f7ff',
+              500: '#1f4fff',
+              600: '#173ee0',
+              900: '#0d1a4f'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui']
+          },
+          boxShadow: {
+            soft: '0 10px 30px -12px rgba(0,0,0,.22)'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-white text-zinc-900 antialiased selection:bg-brand-500 selection:text-white">
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 border-b border-zinc-200">
+    <div class="bg-zinc-50 border-b border-zinc-200">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-end gap-4 text-xs text-zinc-600">
+        <a href="#" class="hover:text-black transition-colors">Ajuda</a>
+        <span class="text-zinc-300">|</span>
+        <a href="#" class="hover:text-black transition-colors">Encontrar Loja</a>
+        <span class="text-zinc-300">|</span>
+        <a href="#" class="hover:text-black transition-colors">Entrar</a>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2">
+        <span class="inline-block h-7 w-7 rounded-full bg-gradient-to-br from-brand-500 to-brand-900"></span>
+        <span class="text-lg font-black tracking-tight">SWOOSH LAB</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+        <a href="#" class="relative hover:text-black transition-colors after:absolute after:left-0 after:-bottom-2 after:h-0.5 after:w-0 hover:after:w-full after:bg-black after:transition-all">Lançamentos</a>
+        <a href="#" class="relative hover:text-black transition-colors after:absolute after:left-0 after:-bottom-2 after:h-0.5 after:w-0 hover:after:w-full after:bg-black after:transition-all">Homens</a>
+        <a href="#" class="relative hover:text-black transition-colors after:absolute after:left-0 after:-bottom-2 after:h-0.5 after:w-0 hover:after:w-full after:bg-black after:transition-all">Mulheres</a>
+        <a href="#" class="relative hover:text-black transition-colors after:absolute after:left-0 after:-bottom-2 after:h-0.5 after:w-0 hover:after:w-full after:bg-black after:transition-all">Infantil</a>
+      </nav>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <div id="searchBox" class="group flex items-center rounded-full bg-zinc-100 px-3 py-2 w-11 hover:w-56 focus-within:w-56 transition-all duration-300 overflow-hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0 text-zinc-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m1.35-5.15a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <label for="search" class="sr-only">Buscar</label>
+          <input id="search" type="text" placeholder="Buscar" class="ml-2 w-full bg-transparent text-sm placeholder:text-zinc-500 focus:outline-none" />
+        </div>
+
+        <button aria-label="Favoritos" class="p-2 rounded-full hover:bg-zinc-100 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0 7.5-9 12-9 12s-9-4.5-9-12a5.25 5.25 0 019-3.75A5.25 5.25 0 0121 8.25z" />
+          </svg>
+        </button>
+
+        <button aria-label="Carrinho" class="p-2 rounded-full hover:bg-zinc-100 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386a1.5 1.5 0 011.455 1.139l.947 3.787m0 0l1.228 4.91a1.5 1.5 0 001.455 1.139h7.724a1.5 1.5 0 001.455-1.139l1.228-4.91m-14.492 0h14.492M9 19.5a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm9 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="relative min-h-[78vh] w-full overflow-hidden">
+      <img
+        src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1950&q=80"
+        alt="Tênis em destaque"
+        class="absolute inset-0 h-full w-full object-cover"
+      />
+      <div class="absolute inset-0 bg-black/35"></div>
+
+      <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 min-h-[78vh] flex items-end pb-14 sm:pb-20">
+        <div class="max-w-2xl text-white">
+          <p class="text-xs uppercase tracking-[0.2em] text-zinc-200 mb-3">Coleção Performance 2026</p>
+          <h1 class="text-4xl sm:text-6xl font-black uppercase leading-tight tracking-tight">
+            VELOCIDADE EM CADA PASSO
+          </h1>
+          <p class="mt-4 text-sm sm:text-base text-zinc-100 max-w-xl">
+            Descubra os novos modelos com amortecimento responsivo, design minimalista e tecnologia criada para elevar sua rotina.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="#" class="inline-flex items-center justify-center rounded-full bg-white text-black px-7 py-3 text-sm font-semibold hover:bg-zinc-200 hover:-translate-y-0.5 transition-all">
+              Comprar
+            </a>
+            <a href="#" class="inline-flex items-center justify-center rounded-full border border-white text-white px-7 py-3 text-sm font-semibold hover:bg-white hover:text-black hover:-translate-y-0.5 transition-all">
+              Ver Detalhes
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-14 sm:py-20">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex items-end justify-between gap-4 mb-8">
+          <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Destaques da Semana</h2>
+          <a href="#" class="text-sm font-medium hover:underline">Ver Todos</a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <article class="group">
+            <a href="#" class="block rounded-2xl overflow-hidden bg-white transition-all duration-300 hover:shadow-soft hover:-translate-y-1">
+              <div class="aspect-square bg-gray-100 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&w=900&q=80" alt="Tênis Air Motion" class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div class="pt-4">
+                <p class="text-xs font-semibold uppercase tracking-wider text-brand-600">Lançamento</p>
+                <h3 class="mt-1 text-base font-bold">Air Motion Pro</h3>
+                <p class="text-sm text-zinc-500">Corrida • Masculino</p>
+                <p class="mt-2 text-sm font-semibold">R$ 899,99</p>
+              </div>
+            </a>
+          </article>
+
+          <article class="group">
+            <a href="#" class="block rounded-2xl overflow-hidden bg-white transition-all duration-300 hover:shadow-soft hover:-translate-y-1">
+              <div class="aspect-square bg-gray-100 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1517260911205-8a3bfa8d6ec9?auto=format&fit=crop&w=900&q=80" alt="Tênis Urban Pulse" class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div class="pt-4">
+                <p class="text-xs font-semibold uppercase tracking-wider text-zinc-700">Exclusivo</p>
+                <h3 class="mt-1 text-base font-bold">Urban Pulse X</h3>
+                <p class="text-sm text-zinc-500">Lifestyle • Unissex</p>
+                <p class="mt-2 text-sm font-semibold">R$ 799,99</p>
+              </div>
+            </a>
+          </article>
+
+          <article class="group">
+            <a href="#" class="block rounded-2xl overflow-hidden bg-white transition-all duration-300 hover:shadow-soft hover:-translate-y-1">
+              <div class="aspect-square bg-gray-100 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=900&q=80" alt="Tênis Aero Zoom" class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div class="pt-4">
+                <p class="text-xs font-semibold uppercase tracking-wider text-brand-600">Lançamento</p>
+                <h3 class="mt-1 text-base font-bold">Aero Zoom Elite</h3>
+                <p class="text-sm text-zinc-500">Treino • Feminino</p>
+                <p class="mt-2 text-sm font-semibold">R$ 949,99</p>
+              </div>
+            </a>
+          </article>
+
+          <article class="group">
+            <a href="#" class="block rounded-2xl overflow-hidden bg-white transition-all duration-300 hover:shadow-soft hover:-translate-y-1">
+              <div class="aspect-square bg-gray-100 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=900&q=80" alt="Tênis Street One" class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div class="pt-4">
+                <p class="text-xs font-semibold uppercase tracking-wider text-zinc-700">Exclusivo</p>
+                <h3 class="mt-1 text-base font-bold">Street One React</h3>
+                <p class="text-sm text-zinc-500">Casual • Infantil</p>
+                <p class="mt-2 text-sm font-semibold">R$ 599,99</p>
+              </div>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-zinc-900 text-zinc-200">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div>
+        <h3 class="text-sm font-bold uppercase tracking-wide text-white mb-4">Início Rápido</h3>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#" class="hover:text-white transition-colors">Encontre uma Loja</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Cadastre-se</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Programa de Membros</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-bold uppercase tracking-wide text-white mb-4">Ajuda</h3>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#" class="hover:text-white transition-colors">Status do Pedido</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Entrega e Frete</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Trocas e Devoluções</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Fale Conosco</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-bold uppercase tracking-wide text-white mb-4">Sobre a Marca</h3>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#" class="hover:text-white transition-colors">Nossa História</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Sustentabilidade</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Carreiras</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Inovação</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-bold uppercase tracking-wide text-white mb-4">Redes Sociais</h3>
+        <div class="flex items-center gap-3">
+          <a href="#" aria-label="Instagram" class="h-10 w-10 rounded-full bg-zinc-700/70 hover:bg-white hover:text-zinc-900 transition-colors grid place-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <rect x="3" y="3" width="18" height="18" rx="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none" />
+            </svg>
+          </a>
+          <a href="#" aria-label="X" class="h-10 w-10 rounded-full bg-zinc-700/70 hover:bg-white hover:text-zinc-900 transition-colors grid place-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.9 2H22l-6.77 7.74L23 22h-6.1l-4.78-6.25L6.66 22H3.54l7.24-8.28L1 2h6.25l4.3 5.68L18.9 2z" />
+            </svg>
+          </a>
+          <a href="#" aria-label="YouTube" class="h-10 w-10 rounded-full bg-zinc-700/70 hover:bg-white hover:text-zinc-900 transition-colors grid place-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M21.8 8.2a2.8 2.8 0 00-2-2c-1.8-.5-7.8-.5-7.8-.5s-6 0-7.8.5a2.8 2.8 0 00-2 2A29.6 29.6 0 002 12a29.6 29.6 0 00.2 3.8 2.8 2.8 0 002 2c1.8.5 7.8.5 7.8.5s6 0 7.8-.5a2.8 2.8 0 002-2A29.6 29.6 0 0022 12a29.6 29.6 0 00-.2-3.8zM10 15.5v-7l6 3.5-6 3.5z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-zinc-700/60">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 text-xs text-zinc-400 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <p>© 2026 Swoosh Lab. Todos os direitos reservados.</p>
+        <div class="flex items-center gap-4">
+          <a href="#" class="hover:text-zinc-200 transition-colors">Política de Privacidade</a>
+          <a href="#" class="hover:text-zinc-200 transition-colors">Termos de Uso</a>
+          <a href="#" class="hover:text-zinc-200 transition-colors">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
