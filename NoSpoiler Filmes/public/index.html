@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NoSpoiler: encontre filmes, confira avaliacoes e explore detalhes sem estragar a historia.">
+    <meta name="theme-color" content="#09070d">
+    <title>NoSpoiler | Seu proximo filme, sem spoilers</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="api.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <header class="site-header">
+      <a class="brand" href="#inicio" aria-label="NoSpoiler - inicio">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" role="img">
+            <path d="M10 8h28a4 4 0 0 1 4 4v24a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4V12a4 4 0 0 1 4-4Z"/>
+            <path d="m20 17 12 7-12 7V17Z" class="brand-play"/>
+          </svg>
+        </span>
+        <span>No<span>Spoiler</span></span>
+      </a>
+      <nav class="main-nav" aria-label="Navegacao principal">
+        <a href="#catalogo">Catálogo</a>
+        <a href="#catalogo" id="favorites-nav">Favoritos <span id="favorites-nav-count">0</span></a>
+        <a href="#sobre">Sobre</a>
+      </nav>
+    </header>
+
+    <main id="inicio">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <span class="eyebrow"><span></span> Descubra sem estragar a surpresa</span>
+          <h1 id="hero-title">Seu próximo filme está a uma <em>busca</em> de distância.</h1>
+          <p>Explore títulos, avaliações e todos os detalhes que importam. A história continua sendo segredo.</p>
+
+          <form class="search-form" id="search-form" role="search">
+            <label class="sr-only" for="search-input">Buscar filme</label>
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m21 21-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z"/></svg>
+            <input id="search-input" name="search" type="search" minlength="2" maxlength="80" placeholder="Busque por Batman, Matrix, Interestelar..." autocomplete="off" required>
+            <button type="submit">Buscar filme</button>
+          </form>
+
+          <div class="search-filters" aria-label="Filtros de busca">
+            <label>
+              <span>Tipo</span>
+              <select id="type-filter">
+                <option value="">Todos</option>
+                <option value="movie">Filmes</option>
+                <option value="series">Séries</option>
+                <option value="episode">Episódios</option>
+              </select>
+            </label>
+            <label>
+              <span>Ano</span>
+              <input id="year-filter" type="number" min="1888" max="2026" inputmode="numeric" placeholder="Ex.: 2014">
+            </label>
+            <button class="clear-filters" id="clear-filters" type="button">Limpar filtros</button>
+          </div>
+
+          <div class="quick-search" aria-label="Buscas sugeridas">
+            <span>Experimente:</span>
+            <button type="button" data-search="Batman">Batman</button>
+            <button type="button" data-search="Matrix">Matrix</button>
+            <button type="button" data-search="Star Wars">Star Wars</button>
+          </div>
+
+          <div class="search-history" id="search-history" hidden>
+            <span>Buscas recentes:</span>
+            <div id="history-list"></div>
+            <button id="clear-history" type="button" aria-label="Limpar histórico de buscas">Limpar</button>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="orbit orbit-one"></div>
+          <div class="orbit orbit-two"></div>
+          <div class="hero-card hero-card-back">
+            <span>NO</span>
+            <strong>SPOILER</strong>
+          </div>
+          <div class="hero-card hero-card-front">
+            <span class="hero-card-label">EM CARTAZ</span>
+            <div class="hero-card-art"><span>?</span></div>
+            <div class="hero-card-lines"><i></i><i></i></div>
+          </div>
+          <div class="floating-score"><strong>8.7</strong><span>IMDb</span></div>
+        </div>
+      </section>
+
+      <section class="catalog-section" id="catalogo" aria-labelledby="catalog-title">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow"><span></span> Catálogo</span>
+            <h2 id="catalog-title">Filmes em destaque</h2>
+            <p id="results-summary">Uma seleção para começar sua próxima sessão.</p>
+          </div>
+          <div class="catalog-actions">
+            <span class="hover-tip"><span class="mouse-icon"></span> Passe sobre um filme para ver a nota</span>
+            <button class="favorites-toggle" id="favorites-toggle" type="button">
+              <span aria-hidden="true">♥</span> Meus favoritos <strong id="favorites-count">0</strong>
+            </button>
+          </div>
+        </div>
+
+        <div class="status-message" id="status-message" role="status" aria-live="polite"></div>
+        <div class="movie-grid" id="movie-grid"></div>
+
+        <nav class="pagination" id="pagination" aria-label="Paginacao dos resultados" hidden>
+          <button id="previous-page" type="button" aria-label="Pagina anterior">←</button>
+          <span id="page-indicator"></span>
+          <button id="next-page" type="button" aria-label="Proxima pagina">→</button>
+        </nav>
+      </section>
+
+      <section class="about-section" id="sobre">
+        <span class="about-icon" aria-hidden="true">N</span>
+        <div>
+          <span class="eyebrow"><span></span> Sobre a experiência</span>
+          <h2>Informação suficiente. Spoiler nenhum.</h2>
+        </div>
+        <p>A NoSpoiler consulta a base OMDb para entregar ficha técnica, elenco, avaliações e sinopse em uma experiência rápida, limpa e focada em cinema.</p>
+      </section>
+    </main>
+
+    <footer>
+      <a class="brand brand-small" href="#inicio"><span>No<span>Spoiler</span></span></a>
+      <p>Dados fornecidos pela OMDb API.</p>
+      <p>© 2026 NoSpoiler</p>
+    </footer>
+
+    <dialog class="movie-dialog" id="movie-dialog" aria-labelledby="dialog-title">
+      <button class="dialog-close" id="dialog-close" type="button" aria-label="Fechar detalhes">×</button>
+      <div id="dialog-content"></div>
+    </dialog>
+  </body>
+</html>
