@@ -187,6 +187,30 @@ h3 > span { font-weight: 500; }
 .card-right { right: 0; top: 10px; transform: rotate(14deg); }
 .memory-caption { position: absolute; bottom: 18px; width: 100%; text-align: center; color: #8c997c; font-size: 6px; letter-spacing: 1px; }
 
+.certify-preview { background: #e8edf9; color: #314771; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+.certify-preview .preview-label { color: #6e7e9d; }
+.certify-title { font: 800 25px 'Manrope', sans-serif; letter-spacing: -1px; margin-top: 15px; }
+.certify-title > span { color: #4976ce; }
+.certify-caption { font-size: 6px; letter-spacing: 1.8px; }
+.certify-challenges { display: flex; gap: 9px; margin-block: 5px; }
+.certify-challenges > span { display: grid; place-items: center; gap: 8px; width: 65px; padding: 12px 3px; border: 1px solid #ccd6ec; border-radius: 8px; background: #f8faff; font: 700 22px monospace; }
+.certify-challenges > span:nth-child(2) { color: #8161ab; }
+.certify-challenges > span:nth-child(3) { color: #4d806c; }
+.certify-challenges small { font: 5px 'DM Sans', sans-serif; letter-spacing: .5px; }
+.certify-progress { font-size: 7px; color: #6e7e9d; }
+.bookstore-preview { background: #234b40; display: grid; place-items: center; }
+.bookstore-dashboard { width: 250px; max-width: 82%; padding: 15px 18px; margin-top: 15px; background: #fbf6e9; border: 1px solid #d5c399; border-radius: 8px; transform: rotate(-3deg); box-shadow: 0 8px 20px #102c3533; }
+.bookstore-title { display: block; color: #345548; font: 700 14px Georgia, serif; letter-spacing: 1px; }
+.bookstore-title small { font: 5px 'DM Sans', sans-serif; letter-spacing: 2px; margin-left: 4px; }
+.bookstore-metrics { display: flex; justify-content: space-between; gap: 10px; margin-block: 13px; color: #8b826c; font-size: 5px; letter-spacing: .5px; }
+.bookstore-metrics strong { display: block; margin-top: 5px; color: #345548; font: 700 15px 'Manrope', sans-serif; }
+.bookstore-chart { display: flex; align-items: flex-end; gap: 8px; height: 48px; border-bottom: 1px solid #ded5bb; }
+.bookstore-chart > span { flex: 1; height: 40%; background: #bca269; border-radius: 3px 3px 0 0; }
+.bookstore-chart > span:nth-child(2n) { height: 65%; background: #5b7a65; }
+.bookstore-chart > span:nth-child(3n) { height: 52%; }
+.bookstore-chart > span:last-child { height: 90%; }
+.bookstore-caption { display: block; margin-top: 9px; color: #8b826c; font-size: 5px; letter-spacing: 1px; }
+
 .about-section { display: grid; grid-template-columns: 1fr 1fr; gap: 95px; border-top: 1px solid var(--line); padding-block: 48px; }
 .about-intro .eyebrow { font-size: 8px; margin-bottom: 16px; }
 .about-intro h2 { font-size: 30px; line-height: 1.35; margin-bottom: 18px; }
