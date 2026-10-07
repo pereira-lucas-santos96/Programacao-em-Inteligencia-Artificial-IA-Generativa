@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#183f36">
+  <title>Livraria Bahubali · Dashboard de vendas</title>
+  <link rel="icon" href="assets/emblema.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script src="vendor/papaparse.min.js" defer></script>
+  <script src="vendor/chart.umd.js" defer></script>
+  <script src="dados-iniciais.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#principal">Pular para o conteúdo</a>
+  <aside class="sidebar" aria-label="Navegação principal">
+    <a class="brand" href="#inicio" aria-label="Livraria Bahubali, início"><img src="assets/emblema.svg" alt="" width="45" height="52"><span>BAHUBALI<small>L I V R A R I A</small></span></a>
+    <div class="sidebar-divider"></div>
+    <p class="nav-label">SEU NEGÓCIO</p>
+    <nav>
+      <a class="nav-link active" href="#inicio"><span aria-hidden="true">▦</span> Visão geral</a>
+      <a class="nav-link" href="#analises"><span aria-hidden="true">▥</span> Análise de vendas</a>
+      <a class="nav-link" href="#vendas"><span aria-hidden="true">≡</span> Últimas vendas</a>
+      <button class="nav-link" type="button" data-open-import><span aria-hidden="true">↥</span> Atualizar dados</button>
+    </nav>
+    <div class="sidebar-story"><span class="story-symbol" aria-hidden="true">✧</span><p>Grandes histórias.<br>Novas conquistas.</p><small>Inspirada na coragem e no legado de Bahubali.</small><div class="story-line"></div><span class="story-footer">CADA LIVRO, UM NOVO REINO</span></div>
+    <div class="sidebar-bottom"><span class="online-dot"></span> Seu universo de livros</div>
+  </aside>
+
+  <div class="workspace" id="inicio">
+    <header class="topbar"><div class="breadcrumb">Livraria Bahubali <span>/</span> <strong>Visão geral</strong></div><div class="topbar-right"><span class="local-badge"><span class="online-dot"></span> Dados locais</span><span class="avatar" aria-label="Livraria Bahubali">B</span></div></header>
+    <main id="principal">
+      <div class="page-heading"><div><p class="eyebrow">INTELIGÊNCIA DE VENDAS</p><h1>Uma nova página de resultados.</h1><p class="muted">Acompanhe suas lojas. Descubra histórias nos seus números.</p></div><button class="button primary" type="button" data-open-import><span aria-hidden="true">↥</span> Atualizar base</button></div>
+
+      <section class="hero" aria-labelledby="hero-title"><div class="hero-copy"><span class="hero-kicker"><span></span> O LEGADO CONTINUA</span><h2 id="hero-title">Grandes conquistas<br>começam com conhecimento.</h2><p>O universo de Bahubali inspira nossa jornada.<br>Seus dados apontam o próximo capítulo.</p><div class="hero-period"><span aria-hidden="true">◷</span> <span id="hero-period">Carregando período…</span></div></div><img class="hero-art" src="assets/reino.svg" alt="Ilustração de um palácio indiano entre arcos, montanhas e livros, em tons de dourado e verde"></section>
+
+      <section class="filters" aria-label="Filtros do dashboard"><div class="filter-title"><span aria-hidden="true">☷</span><strong>Explore seus dados</strong></div><div class="filter-field"><label for="loja">Loja</label><select id="loja"><option value="">Todas as lojas</option></select></div><div class="filter-field"><label for="categoria">Categoria</label><select id="categoria"><option value="">Todas as categorias</option></select></div><button id="clear-filters" class="text-button" type="button">Limpar filtros <span aria-hidden="true">↺</span></button><span id="selection-count" class="selection-count" aria-live="polite"></span></section>
+
+      <div class="section-heading"><h2>Seu negócio em números</h2><span id="period-label" class="muted"></span></div>
+      <section class="kpi-grid" aria-label="Indicadores de vendas" aria-live="polite">
+        <article class="kpi"><div class="kpi-label">Receita total <span class="kpi-icon" aria-hidden="true">R$</span></div><strong id="kpi-revenue" class="kpi-value">—</strong><span class="kpi-note">Faturamento da seleção</span></article>
+        <article class="kpi"><div class="kpi-label">Itens vendidos <span class="kpi-icon" aria-hidden="true">▤</span></div><strong id="kpi-quantity" class="kpi-value">—</strong><span class="kpi-note">Livros que ganharam leitores</span></article>
+        <article class="kpi"><div class="kpi-label">Número de vendas <span class="kpi-icon" aria-hidden="true">▧</span></div><strong id="kpi-sales" class="kpi-value">—</strong><span class="kpi-note">Registros de venda</span></article>
+        <article class="kpi"><div class="kpi-label">Ticket médio <span class="kpi-icon" aria-hidden="true">◇</span></div><strong id="kpi-ticket" class="kpi-value">—</strong><span class="kpi-note">Receita por registro de venda</span></article>
+        <article class="kpi"><div class="kpi-label">Produto mais vendido <span class="kpi-icon gold" aria-hidden="true">♕</span></div><strong id="kpi-product" class="kpi-value product-value">—</strong><span id="kpi-product-note" class="kpi-note">Ranking por unidades</span></article>
+        <article class="kpi"><div class="kpi-label">Variação mensal <span class="kpi-icon" aria-hidden="true">↗</span></div><strong id="kpi-change" class="kpi-value">—</strong><span id="kpi-change-note" class="kpi-note">Último mês × mês anterior</span></article>
+      </section>
+
+      <section id="analises" class="chart-grid" aria-label="Análises de vendas">
+        <article class="panel"><div class="panel-heading"><div><h2>Receita por categoria</h2><p>O valor de cada universo literário</p></div><span class="panel-unit">R$</span></div><div class="chart-wrap"><canvas id="category-chart" role="img" aria-label="Receita por categoria"></canvas><p class="chart-empty" hidden>Sem vendas para esta seleção.</p></div></article>
+        <article class="panel"><div class="panel-heading"><div><h2>Participação na receita</h2><p>Cada categoria no resultado total</p></div><span class="panel-unit">%</span></div><div class="donut-layout"><div class="chart-wrap donut-wrap"><canvas id="share-chart" role="img" aria-label="Participação das categorias na receita"></canvas><p class="chart-empty" hidden>Sem receita nesta seleção.</p></div><div id="share-legend" class="share-legend"></div></div></article>
+        <article class="panel"><div class="panel-heading"><div><h2>Evolução da receita</h2><p>Os capítulos do seu crescimento</p></div><span class="panel-unit">MENSAL</span></div><div class="chart-wrap"><canvas id="monthly-chart" role="img" aria-label="Evolução mensal da receita"></canvas><p class="chart-empty" hidden>Sem vendas para esta seleção.</p></div></article>
+        <article class="panel"><div class="panel-heading"><div><h2>Os favoritos dos leitores</h2><p>Top 5 produtos por unidades vendidas</p></div><span class="panel-unit">TOP 5</span></div><div class="chart-wrap"><canvas id="products-chart" role="img" aria-label="Cinco produtos mais vendidos"></canvas><p class="chart-empty" hidden>Sem vendas para esta seleção.</p></div></article>
+      </section>
+
+      <section id="vendas" class="panel sales-panel" aria-labelledby="sales-title"><div class="panel-heading"><div><h2 id="sales-title">Últimas vendas</h2><p>As 10 vendas mais recentes da seleção · clique nos títulos para ordenar</p></div><button class="button secondary small" id="export-data" type="button"><span aria-hidden="true">↓</span> Exportar seleção</button></div><div class="table-scroll"><table><caption class="sr-only">Dez vendas mais recentes. Os cabeçalhos permitem alternar a ordenação destas vendas.</caption><thead><tr><th scope="col" aria-sort="descending"><button data-sort="date">Data <span>↓</span></button></th><th scope="col"><button data-sort="store">Loja <span>↕</span></button></th><th scope="col"><button data-sort="category">Categoria <span>↕</span></button></th><th scope="col"><button data-sort="product">Produto <span>↕</span></button></th><th scope="col" class="numeric"><button data-sort="quantity">Quantidade <span>↕</span></button></th><th scope="col" class="numeric"><button data-sort="cents">Valor <span>↕</span></button></th></tr></thead><tbody id="sales-body"></tbody></table></div><div class="table-footer"><span id="table-count"></span><span>Valores em reais (BRL)</span></div></section>
+
+      <section class="data-source" aria-label="Informações da base"><span class="source-icon" aria-hidden="true">▤</span><div><strong id="source-name">vendas_livraria.csv</strong><p id="source-details">Carregando dados…</p></div><button class="text-button" type="button" data-open-import>Gerenciar base <span aria-hidden="true">↗</span></button></section>
+      <footer class="footer"><span>BAHUBALI <span class="footer-separator">/</span> Histórias que inspiram. Dados que transformam.</span><span>Feito para o próximo capítulo <span class="footer-star">✧</span></span></footer>
+      <noscript><p>Ative o JavaScript no navegador para carregar os indicadores e importar arquivos.</p></noscript>
+    </main>
+  </div>
+
+  <dialog id="import-dialog" aria-labelledby="import-title"><div class="dialog-heading"><div><p class="eyebrow">UM NOVO CAPÍTULO</p><h2 id="import-title">Atualizar base de vendas</h2></div><button id="close-import" class="close-button" aria-label="Fechar importação" type="button">×</button></div><p class="dialog-description">Selecione a planilha CSV completa. Ela substituirá a base atual e atualizará todos os indicadores.</p><label id="drop-zone" class="drop-zone" for="csv-file"><span class="upload-icon" aria-hidden="true">↥</span><strong>Escolha um arquivo CSV</strong><span>ou arraste e solte aqui · até 5 MB</span><input id="csv-file" type="file" accept=".csv,text/csv"></label><div class="format-info"><strong>Como preparar seu arquivo</strong><p>Use as colunas <code>Data, Loja, Categoria, Produto, Quantidade, Valor</code>. Data no formato <code>2026-08-26</code>. Valor é o total da venda, não o preço unitário.</p><p>Aceitamos separador vírgula ou ponto e vírgula, com valores como <code>59.80</code> ou <code>59,80</code> (entre aspas se o separador for vírgula).</p><button id="download-template" class="text-button" type="button">↓ Baixar modelo CSV</button></div><div id="import-feedback" class="import-feedback" role="status" aria-live="polite" hidden></div><p class="privacy-note">Os dados ficam neste navegador. Guarde seu CSV para atualizar a base ou abri-la em outro dispositivo.</p><div class="dialog-actions"><button id="restore-original" class="text-button" type="button">Restaurar base fornecida</button><button id="cancel-import" class="button secondary" type="button">Fechar</button></div></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

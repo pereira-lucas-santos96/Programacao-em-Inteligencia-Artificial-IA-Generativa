@@ -1,0 +1,189 @@
+Data,Loja,Categoria,Produto,Quantidade,Valor
+2026-01-01,Zona Sul,Acadêmico,Redação Científica,1,99.90
+2026-01-04,Zona Sul,Não-ficção,Viver Melhor,3,95.70
+2026-01-07,Shopping Norte,Infantil,A Lua Sorridente,5,109.50
+2026-01-08,Centro,Não-ficção,Economia do Dia a Dia,2,73.80
+2026-01-08,Zona Sul,Ficção,O Jardim Esquecido,5,144.50
+2026-01-11,Shopping Norte,Não-ficção,Economia do Dia a Dia,6,221.40
+2026-01-11,Shopping Norte,Acadêmico,Álgebra Linear,2,299.80
+2026-01-17,Centro,Infantil,Meu Primeiro Alfabeto,3,66.00
+2026-01-18,Centro,Ficção,Trilha das Estrelas,1,31.50
+2026-01-22,Centro,Infantil,O Dragão Gentil,2,51.80
+2026-01-22,Centro,Acadêmico,Metodologia da Pesquisa,1,109.90
+2026-01-23,Centro,Ficção,Sombras da Cidade,3,104.70
+2026-01-23,Centro,Não-ficção,Economia do Dia a Dia,6,221.40
+2026-01-23,Shopping Norte,Ficção,Trilha das Estrelas,4,126.00
+2026-01-24,Zona Sul,Ficção,O Jardim Esquecido,6,173.40
+2026-01-25,Zona Sul,Infantil,O Dragão Gentil,2,51.80
+2026-01-27,Centro,Ficção,Trilha das Estrelas,1,31.50
+2026-01-27,Centro,Infantil,A Lua Sorridente,2,43.80
+2026-01-27,Shopping Norte,Ficção,Mar de Papel,6,165.00
+2026-02-01,Centro,Infantil,Bicho Curioso,5,124.50
+2026-02-02,Centro,Acadêmico,Cálculo Aplicado,6,930.00
+2026-02-02,Shopping Norte,Ficção,Mar de Papel,3,82.50
+2026-02-02,Shopping Norte,Acadêmico,Redação Científica,2,199.80
+2026-02-03,Shopping Norte,Não-ficção,Viver Melhor,4,127.60
+2026-02-04,Centro,Não-ficção,Economia do Dia a Dia,4,147.60
+2026-02-04,Zona Sul,Infantil,O Dragão Gentil,2,51.80
+2026-02-05,Centro,Ficção,A Casa Silenciosa,1,32.00
+2026-02-06,Shopping Norte,Infantil,Amigos do Bosque,2,47.00
+2026-02-07,Shopping Norte,Infantil,A Floresta Mágica,1,26.50
+2026-02-07,Zona Sul,Infantil,Bicho Curioso,5,124.50
+2026-02-09,Zona Sul,Acadêmico,Álgebra Linear,5,749.50
+2026-02-12,Zona Sul,Não-ficção,Viver Melhor,6,191.40
+2026-02-13,Zona Sul,Não-ficção,Hábitos que Constroem,2,84.00
+2026-02-17,Centro,Infantil,A Lua Sorridente,3,65.70
+2026-02-17,Centro,Infantil,Meu Primeiro Alfabeto,3,66.00
+2026-02-18,Zona Sul,Acadêmico,Redação Científica,3,299.70
+2026-02-20,Centro,Ficção,O Último Verão,1,29.90
+2026-02-22,Shopping Norte,Não-ficção,Finanças Sem Mistério,5,224.50
+2026-02-23,Zona Sul,Não-ficção,Economia do Dia a Dia,1,36.90
+2026-02-24,Shopping Norte,Infantil,O Dragão Gentil,5,129.50
+2026-02-25,Shopping Norte,Acadêmico,Álgebra Linear,4,599.60
+2026-02-26,Shopping Norte,Não-ficção,Mente em Foco,2,79.00
+2026-02-27,Shopping Norte,Acadêmico,Cálculo Aplicado,2,310.00
+2026-02-27,Zona Sul,Ficção,O Último Verão,6,179.40
+2026-02-27,Zona Sul,Acadêmico,Estatística Básica,1,128.00
+2026-03-02,Centro,Não-ficção,Hábitos que Constroem,6,252.00
+2026-03-02,Centro,Acadêmico,Introdução à Programação,2,279.80
+2026-03-03,Shopping Norte,Acadêmico,Estatística Básica,2,256.00
+2026-03-03,Zona Sul,Não-ficção,Viver Melhor,5,159.50
+2026-03-03,Zona Sul,Infantil,Bicho Curioso,6,149.40
+2026-03-08,Shopping Norte,Acadêmico,Cálculo Aplicado,2,310.00
+2026-03-09,Centro,Não-ficção,Corpo e Mente,6,225.00
+2026-03-10,Centro,Infantil,A Floresta Mágica,6,159.00
+2026-03-10,Shopping Norte,Infantil,A Lua Sorridente,5,109.50
+2026-03-10,Zona Sul,Ficção,O Jardim Esquecido,5,144.50
+2026-03-11,Zona Sul,Ficção,O Jardim Esquecido,3,86.70
+2026-03-11,Zona Sul,Não-ficção,Economia do Dia a Dia,1,36.90
+2026-03-11,Zona Sul,Acadêmico,Metodologia da Pesquisa,3,329.70
+2026-03-13,Shopping Norte,Ficção,O Último Verão,6,179.40
+2026-03-13,Zona Sul,Não-ficção,Hábitos que Constroem,3,126.00
+2026-03-17,Centro,Ficção,Mar de Papel,3,82.50
+2026-03-18,Centro,Infantil,Bicho Curioso,3,74.70
+2026-03-19,Zona Sul,Infantil,O Dragão Gentil,3,77.70
+2026-03-20,Shopping Norte,Não-ficção,Economia do Dia a Dia,6,221.40
+2026-03-21,Zona Sul,Acadêmico,Introdução à Programação,3,419.70
+2026-03-23,Centro,Ficção,Sombras da Cidade,3,104.70
+2026-03-25,Shopping Norte,Não-ficção,Hábitos que Constroem,1,42.00
+2026-03-26,Zona Sul,Infantil,A Floresta Mágica,6,159.00
+2026-04-02,Shopping Norte,Infantil,Amigos do Bosque,2,47.00
+2026-04-02,Shopping Norte,Acadêmico,Metodologia da Pesquisa,3,329.70
+2026-04-04,Shopping Norte,Não-ficção,Finanças Sem Mistério,3,134.70
+2026-04-05,Centro,Não-ficção,Hábitos que Constroem,3,126.00
+2026-04-10,Shopping Norte,Infantil,A Floresta Mágica,1,26.50
+2026-04-14,Centro,Infantil,Bicho Curioso,5,124.50
+2026-04-14,Zona Sul,Ficção,Sombras da Cidade,4,139.60
+2026-04-15,Shopping Norte,Ficção,Trilha das Estrelas,3,94.50
+2026-04-16,Centro,Não-ficção,Finanças Sem Mistério,6,269.40
+2026-04-16,Zona Sul,Infantil,Meu Primeiro Alfabeto,3,66.00
+2026-04-16,Zona Sul,Acadêmico,Álgebra Linear,6,899.40
+2026-04-18,Zona Sul,Ficção,Mar de Papel,5,137.50
+2026-04-19,Centro,Ficção,Sombras da Cidade,5,174.50
+2026-04-19,Zona Sul,Infantil,A Floresta Mágica,5,132.50
+2026-04-21,Shopping Norte,Acadêmico,Cálculo Aplicado,2,310.00
+2026-04-21,Zona Sul,Não-ficção,Mente em Foco,3,118.50
+2026-04-22,Shopping Norte,Não-ficção,Hábitos que Constroem,6,252.00
+2026-04-23,Centro,Ficção,O Jardim Esquecido,5,144.50
+2026-04-23,Shopping Norte,Ficção,A Casa Silenciosa,4,128.00
+2026-04-24,Zona Sul,Ficção,Trilha das Estrelas,6,189.00
+2026-04-26,Centro,Acadêmico,Metodologia da Pesquisa,4,439.60
+2026-04-26,Shopping Norte,Ficção,Mar de Papel,4,110.00
+2026-04-26,Zona Sul,Acadêmico,Álgebra Linear,1,149.90
+2026-05-03,Shopping Norte,Ficção,Sombras da Cidade,6,209.40
+2026-05-03,Zona Sul,Não-ficção,Corpo e Mente,6,225.00
+2026-05-03,Zona Sul,Infantil,A Lua Sorridente,3,65.70
+2026-05-04,Shopping Norte,Não-ficção,Corpo e Mente,3,112.50
+2026-05-05,Zona Sul,Ficção,Mar de Papel,5,137.50
+2026-05-06,Centro,Não-ficção,Economia do Dia a Dia,2,73.80
+2026-05-06,Shopping Norte,Infantil,O Dragão Gentil,4,103.60
+2026-05-06,Zona Sul,Ficção,O Jardim Esquecido,4,115.60
+2026-05-07,Centro,Infantil,Amigos do Bosque,1,23.50
+2026-05-07,Zona Sul,Não-ficção,Viver Melhor,5,159.50
+2026-05-11,Centro,Ficção,O Último Verão,4,119.60
+2026-05-13,Centro,Não-ficção,Corpo e Mente,6,225.00
+2026-05-15,Centro,Infantil,Meu Primeiro Alfabeto,5,110.00
+2026-05-16,Zona Sul,Infantil,A Floresta Mágica,4,106.00
+2026-05-19,Zona Sul,Acadêmico,Redação Científica,4,399.60
+2026-05-20,Shopping Norte,Ficção,O Jardim Esquecido,1,28.90
+2026-05-21,Zona Sul,Não-ficção,Viver Melhor,1,31.90
+2026-05-22,Shopping Norte,Acadêmico,Introdução à Programação,2,279.80
+2026-05-22,Zona Sul,Ficção,Mar de Papel,3,82.50
+2026-05-24,Centro,Acadêmico,Álgebra Linear,4,599.60
+2026-05-24,Shopping Norte,Ficção,Mar de Papel,4,110.00
+2026-05-25,Zona Sul,Acadêmico,Estatística Básica,6,768.00
+2026-05-27,Centro,Não-ficção,Hábitos que Constroem,6,252.00
+2026-05-27,Shopping Norte,Infantil,Bicho Curioso,1,24.90
+2026-06-04,Shopping Norte,Ficção,O Jardim Esquecido,6,173.40
+2026-06-04,Zona Sul,Não-ficção,Corpo e Mente,6,225.00
+2026-06-07,Zona Sul,Acadêmico,Introdução à Programação,3,419.70
+2026-06-10,Zona Sul,Acadêmico,Estatística Básica,2,256.00
+2026-06-11,Shopping Norte,Infantil,Amigos do Bosque,5,117.50
+2026-06-13,Centro,Ficção,Sombras da Cidade,1,34.90
+2026-06-13,Centro,Não-ficção,Hábitos que Constroem,2,84.00
+2026-06-13,Zona Sul,Não-ficção,Hábitos que Constroem,1,42.00
+2026-06-15,Centro,Acadêmico,Álgebra Linear,4,599.60
+2026-06-16,Centro,Não-ficção,Finanças Sem Mistério,6,269.40
+2026-06-16,Centro,Não-ficção,Viver Melhor,6,191.40
+2026-06-17,Centro,Acadêmico,Redação Científica,6,599.40
+2026-06-19,Centro,Ficção,Sombras da Cidade,3,104.70
+2026-06-19,Shopping Norte,Não-ficção,Mente em Foco,6,237.00
+2026-06-19,Shopping Norte,Acadêmico,Cálculo Aplicado,4,620.00
+2026-06-19,Zona Sul,Infantil,O Dragão Gentil,2,51.80
+2026-06-20,Centro,Acadêmico,Redação Científica,4,399.60
+2026-06-21,Shopping Norte,Não-ficção,Mente em Foco,2,79.00
+2026-06-22,Zona Sul,Ficção,O Último Verão,1,29.90
+2026-06-23,Zona Sul,Infantil,Bicho Curioso,2,49.80
+2026-06-24,Centro,Infantil,A Lua Sorridente,1,21.90
+2026-06-26,Shopping Norte,Acadêmico,Cálculo Aplicado,6,930.00
+2026-06-27,Shopping Norte,Ficção,Sombras da Cidade,4,139.60
+2026-06-27,Zona Sul,Não-ficção,Mente em Foco,4,158.00
+2026-07-02,Shopping Norte,Infantil,Meu Primeiro Alfabeto,1,22.00
+2026-07-05,Zona Sul,Não-ficção,Corpo e Mente,5,187.50
+2026-07-07,Centro,Acadêmico,Álgebra Linear,3,449.70
+2026-07-08,Shopping Norte,Ficção,A Casa Silenciosa,1,32.00
+2026-07-10,Shopping Norte,Ficção,O Último Verão,1,29.90
+2026-07-10,Shopping Norte,Acadêmico,Cálculo Aplicado,1,155.00
+2026-07-12,Shopping Norte,Acadêmico,Cálculo Aplicado,1,155.00
+2026-07-14,Centro,Não-ficção,Economia do Dia a Dia,1,36.90
+2026-07-15,Centro,Acadêmico,Cálculo Aplicado,5,775.00
+2026-07-20,Shopping Norte,Infantil,O Dragão Gentil,5,129.50
+2026-07-20,Shopping Norte,Acadêmico,Metodologia da Pesquisa,3,329.70
+2026-07-20,Zona Sul,Ficção,Mar de Papel,1,27.50
+2026-07-20,Zona Sul,Acadêmico,Álgebra Linear,3,449.70
+2026-07-21,Centro,Não-ficção,Hábitos que Constroem,1,42.00
+2026-07-21,Shopping Norte,Não-ficção,Finanças Sem Mistério,6,269.40
+2026-07-21,Zona Sul,Não-ficção,Mente em Foco,3,118.50
+2026-07-23,Shopping Norte,Não-ficção,Finanças Sem Mistério,4,179.60
+2026-07-24,Shopping Norte,Ficção,O Jardim Esquecido,2,57.80
+2026-07-24,Shopping Norte,Infantil,A Lua Sorridente,3,65.70
+2026-07-25,Shopping Norte,Não-ficção,Finanças Sem Mistério,6,269.40
+2026-07-25,Zona Sul,Infantil,A Floresta Mágica,6,159.00
+2026-07-25,Zona Sul,Infantil,Bicho Curioso,5,124.50
+2026-07-26,Centro,Não-ficção,Mente em Foco,5,197.50
+2026-07-26,Centro,Infantil,A Lua Sorridente,1,21.90
+2026-07-27,Centro,Ficção,Trilha das Estrelas,5,157.50
+2026-08-03,Centro,Ficção,A Casa Silenciosa,6,192.00
+2026-08-03,Shopping Norte,Acadêmico,Metodologia da Pesquisa,5,549.50
+2026-08-04,Centro,Não-ficção,Mente em Foco,3,118.50
+2026-08-04,Shopping Norte,Infantil,Amigos do Bosque,4,94.00
+2026-08-05,Centro,Acadêmico,Estatística Básica,2,256.00
+2026-08-06,Centro,Acadêmico,Estatística Básica,5,640.00
+2026-08-06,Shopping Norte,Acadêmico,Metodologia da Pesquisa,1,109.90
+2026-08-08,Shopping Norte,Acadêmico,Redação Científica,5,499.50
+2026-08-08,Zona Sul,Infantil,Amigos do Bosque,5,117.50
+2026-08-10,Shopping Norte,Infantil,A Lua Sorridente,3,65.70
+2026-08-11,Centro,Não-ficção,Hábitos que Constroem,4,168.00
+2026-08-12,Centro,Acadêmico,Estatística Básica,3,384.00
+2026-08-12,Shopping Norte,Ficção,A Casa Silenciosa,6,192.00
+2026-08-12,Shopping Norte,Infantil,O Dragão Gentil,6,155.40
+2026-08-13,Shopping Norte,Não-ficção,Finanças Sem Mistério,1,44.90
+2026-08-17,Zona Sul,Não-ficção,Mente em Foco,5,197.50
+2026-08-18,Zona Sul,Não-ficção,Finanças Sem Mistério,5,224.50
+2026-08-19,Shopping Norte,Não-ficção,Hábitos que Constroem,5,210.00
+2026-08-22,Zona Sul,Não-ficção,Economia do Dia a Dia,3,110.70
+2026-08-22,Zona Sul,Acadêmico,Metodologia da Pesquisa,2,219.80
+2026-08-23,Centro,Infantil,Amigos do Bosque,1,23.50
+2026-08-23,Zona Sul,Ficção,O Jardim Esquecido,5,144.50
+2026-08-24,Shopping Norte,Ficção,Mar de Papel,6,165.00
+2026-08-26,Shopping Norte,Não-ficção,Mente em Foco,1,39.50

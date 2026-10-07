@@ -1,0 +1,113 @@
+﻿PROJETO PRÁTICO 
+Dashboard de Dados com Gráficos 
+Inteligências Artificiais Generativas Aplicada a Programação 
+Desenvolvimento assistido por IA com o Codex CLI 
+ 
+Contexto 
+ 
+A Livraria Alfa é uma rede fictícia com três filiais (Centro, Shopping Norte e Zona Sul). A direção quer entender o desempenho de vendas de toda a rede  por loja, por categoria e ao longo do tempo. Você foi contratado(a) como desenvolvedor(a) para construir um dashboard web capaz de transformar a planilha de vendas consolidada em indicadores e gráficos que apoiem a tomada de decisão. 
+Este projeto simula uma demanda real de mercado: um conjunto de dados maior, com múltiplas dimensões de análise (loja, categoria, tempo), pedindo um dashboard mais completo do que um relatório simples. Você vai usar o Codex como par de programação para estruturar, codificar e refinar a solução. 
+ 
+1. Objetivo de Aprendizagem 
+ 
+Ao final desta atividade, você será capaz de: 
+
+ Estruturar e codificar uma solução web a partir de um requisito de negócio, com apoio de IA generativa. 
+
+ Processar e transformar dados tabulares (CSV) em múltiplos indicadores e visualizações. 
+
+ Combinar diferentes tipos de gráfico (barras, rosca, linha, barras horizontais) com Chart.js, escolhendo o mais adequado para cada informação. 
+
+ Implementar filtros combinados que atualizam vários componentes da interface ao mesmo tempo. 
+
+ Elaborar prompts eficazes para o Codex, documentando o processo de desenvolvimento assistido por IA. 
+ 
+2. Dataset Fornecido 
+ 
+Você recebeu o arquivo vendas_livraria.csv com os registros de vendas das três lojas da rede, além de uma pasta vendor/ com as bibliotecas Chart.js e PapaParse já prontas para uso local (sem depender de internet). Abaixo está uma amostra dos dados (o arquivo completo tem 188 linhas): 
+ 
+ 
+Data 
+Loja 
+Categoria 
+Produto 
+Qtd. 
+Valor (R$) 
+2026-01-02 
+Centro 
+Ficção 
+O Último Verão 
+2 
+59.80 
+2026-02-11 
+Zona Sul 
+Infantil 
+Bicho Curioso 
+4 
+99.60 
+2026-03-19 
+Shopping Norte 
+Acadêmico 
+Cálculo Aplicado 
+1 
+155.00 
+2026-05-07 
+Centro 
+Não-ficção 
+Mente em Foco 
+3 
+118.50 
+... 
+... 
+... 
+... 
+... 
+... 
+ 
+Lojas: Centro, Shopping Norte e Zona Sul. Categorias: Ficção, Não-ficção, Infantil e Acadêmico. Período: janeiro a agosto de 2026. 
+ 
+3. Requisitos Funcionais 
+ 
+A aplicação web deve conter: 
+1.
+ Carregamento do arquivo vendas_livraria.csv com os dados de todas as lojas. 
+2.
+ Dois filtros independentes  por Loja e por Categoria  que atualizam todo o dashboard (KPIs, gráficos e tabela) ao serem alterados. 
+3.
+ Seis cartões de KPI: Receita Total, Itens Vendidos, Número de Vendas, Ticket Médio, Produto Mais Vendido e Variação da receita em relação ao mês anterior. 
+4.
+ Um gráfico de barras com a receita por categoria. 
+5.
+ Um gráfico de pizza ou rosca com a participação percentual de cada categoria na receita. 
+6.
+ Um gráfico de linha com a evolução mensal da receita (janeiro a agosto). 
+7.
+ Um gráfico de barras horizontais com o ranking dos 5 produtos mais vendidos (em unidades). 
+8.
+ Uma tabela com as 10 vendas mais recentes da seleção atual (respeitando os filtros aplicados). 
+9.
+ Layout responsivo e legível, com identidade visual da 'Livraria Alfa'. 
+ 
+Desafio bônus (opcional) 
+Permita ordenar a tabela de vendas clicando no cabeçalho de cada coluna (por data, valor, quantidade etc.), alternando entre ordem crescente e decrescente. 
+ 
+4. Requisitos Técnicos 
+ 
+
+ HTML, CSS e JavaScript puro (sem frameworks obrigatórios). 
+
+ Código organizado em arquivos separados: index.html, style.css e script.js. 
+ 
+ 
+ 
+5. Checklist de Entrega 
+ 
+  index.html, style.css e script.js funcionando juntos, sem erros no console. 
+  Os 6 KPIs exibem valores corretos e mudam ao aplicar os filtros de loja e/ou categoria. 
+  Os 4 gráficos (barras, rosca, linha, barras horizontais) renderizam corretamente e refletem os filtros. 
+  A tabela mostra as 10 vendas mais recentes da seleção atual. 
+  Arquivo de texto ou comentário no código com os prompts utilizados no Codex. 
+ 
+Entrega 
+ 
+Envie a pasta um vídeo que mostre todas as funcionalidades da página. 

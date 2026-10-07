@@ -1,0 +1,11 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>PASS</title></head><body><pre id="result">PASS: vídeo WebM decodificado, 1440 × 1080.</pre><video id="video" src="../demonstracao-bahubali.webm" muted="" preload="auto" style="max-width:100%"></video><script>
+const video = document.getElementById('video');
+video.addEventListener('loadeddata', () => {
+  const valid = video.videoWidth === 1440 && video.videoHeight === 1080;
+  document.title = valid ? 'PASS' : 'FAIL';
+  document.getElementById('result').textContent = `${document.title}: vídeo WebM decodificado, ${video.videoWidth} × ${video.videoHeight}.`;
+});
+video.addEventListener('error', () => { document.title='FAIL';document.getElementById('result').textContent='FAIL: não foi possível decodificar o vídeo.'; });
+</script>
+</body></html>

@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>PASS</title></head><body><pre id="results">PASS 188 vendas
+PASS 670 itens
+PASS Receita R$ 35.378,30
+PASS Ticket R$ 188,18
+PASS Variação agosto/julho +10,8%
+PASS Quatro gráficos criados
+PASS Dez últimas vendas, iniciando 26/08
+PASS Filtros todas / todas
+PASS Filtros todas / Ficção
+PASS Filtros todas / Não-ficção
+PASS Filtros todas / Infantil
+PASS Filtros todas / Acadêmico
+PASS Filtros Centro / todas
+PASS Filtros Centro / Ficção
+PASS Filtros Centro / Não-ficção
+PASS Filtros Centro / Infantil
+PASS Filtros Centro / Acadêmico
+PASS Filtros Shopping Norte / todas
+PASS Filtros Shopping Norte / Ficção
+PASS Filtros Shopping Norte / Não-ficção
+PASS Filtros Shopping Norte / Infantil
+PASS Filtros Shopping Norte / Acadêmico
+PASS Filtros Zona Sul / todas
+PASS Filtros Zona Sul / Ficção
+PASS Filtros Zona Sul / Não-ficção
+PASS Filtros Zona Sul / Infantil
+PASS Filtros Zona Sul / Acadêmico
+PASS Ordenação crescente por valor
+PASS Importação CSV brasileiro
+PASS Variação importada +50%
+PASS Persistência da importação
+PASS Seleção vazia
+PASS Data inválida rejeitada sem perder base
+PASS Colunas ausentes rejeitadas
+PASS Quantidade negativa rejeitada
+PASS Valor inválido rejeitado
+PASS Conteúdo exibido como texto
+PASS Receita zero e comparação sem divisão por zero
+PASS Restauração da base original
+PASS Layout móvel sem rolagem horizontal da página
+PASS Sem erros JavaScript
+
+TOTAL: 41/41</pre><iframe id="app" src="../index.html" style="width: 390px; height: 1000px;"></iframe><script>
+const results = [], errors = [];
+const frame = document.getElementById('app');
+const check = (label, condition) => { results.push(`${condition ? 'PASS' : 'FAIL'} ${label}`); };
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+frame.addEventListener('load', async () => {
+  const w = frame.contentWindow, d = w.document, get = id => d.getElementById(id);
+  w.addEventListener('error', e => errors.push(e.message));
+  w.addEventListener('unhandledrejection', e => errors.push(String(e.reason)));
+  const select = (id, value) => { get(id).value = value; get(id).dispatchEvent(new w.Event('change')); };
+  const upload = async (text, name = 'teste.csv') => { const transfer = new w.DataTransfer(); transfer.items.add(new w.File([text], name, {type:'text/csv'})); get('csv-file').files = transfer.files; get('csv-file').dispatchEvent(new w.Event('change')); for(let i=0;i<100 && get('csv-file').disabled;i++) await delay(30); };
+  try {
+    await delay(300);
+    get('restore-original').click();
+    check('188 vendas', get('kpi-sales').textContent === '188');
+    check('670 itens', get('kpi-quantity').textContent === '670');
+    check('Receita R$ 35.378,30', get('kpi-revenue').textContent.replace(/\s/g,'') === 'R$35.378,30');
+    check('Ticket R$ 188,18', get('kpi-ticket').textContent.replace(/\s/g,'') === 'R$188,18');
+    check('Variação agosto/julho +10,8%', get('kpi-change').textContent === '+10,8%');
+    check('Quatro gráficos criados', Object.keys(w.Chart.instances).length === 4);
+    check('Dez últimas vendas, iniciando 26/08', get('sales-body').children.length === 10 && get('sales-body').firstChild.firstChild.textContent === '26/08/2026');
+    const raw = w.Papa.parse(w.BAHUBALI_INITIAL_CSV, {header:true,skipEmptyLines:true}).data;
+    for(const store of ['', 'Centro', 'Shopping Norte', 'Zona Sul']) {
+      for(const category of ['', 'Ficção', 'Não-ficção', 'Infantil', 'Acadêmico']) {
+        select('loja',store); select('categoria',category);
+        const subset = raw.filter(row => (!store || row.Loja === store) && (!category || row.Categoria === category));
+        const cents = subset.reduce((s,r)=>s+Math.round(Number(r.Valor)*100),0);
+        check(`Filtros ${store || 'todas'} / ${category || 'todas'}`, get('kpi-sales').textContent === String(subset.length) && get('kpi-revenue').textContent === new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(cents/100));
+      }
+    }
+    get('clear-filters').click();
+    d.querySelector('[data-sort="cents"]').click();
+    const values = [...get('sales-body').children].map(row=>Number(row.lastChild.textContent.replace(/[^\d,]/g,'').replace(',','.')));
+    check('Ordenação crescente por valor', values.every((v,i)=>i===0 || values[i-1]<=v));
+    const header = 'Data;Loja;Categoria;Produto;Quantidade;Valor\n';
+    await upload(header + '2026-07-10;Centro;Ficção;Livro A;2;100,00\n2026-08-10;Zona Sul;Infantil;Livro B;3;150,00');
+    check('Importação CSV brasileiro', get('kpi-sales').textContent === '2' && get('kpi-revenue').textContent.replace(/\s/g,'') === 'R$250,00');
+    check('Variação importada +50%', get('kpi-change').textContent === '+50%');
+    check('Persistência da importação', JSON.parse(w.localStorage.getItem('bahubali.vendas.v1')).name === 'teste.csv');
+    select('loja','Centro'); select('categoria','Infantil');
+    check('Seleção vazia', get('kpi-sales').textContent === '0' && get('sales-body').textContent.includes('Nenhuma venda'));
+    get('clear-filters').click();
+    await upload(header + '2026-02-30;Centro;Ficção;Inválido;2;10,00');
+    check('Data inválida rejeitada sem perder base', get('import-feedback').classList.contains('error') && get('kpi-sales').textContent === '2');
+    await upload('Data,Loja\n2026-01-01,Centro');
+    check('Colunas ausentes rejeitadas', get('import-feedback').textContent.includes('Colunas ausentes') && get('kpi-sales').textContent === '2');
+    await upload(header + '2026-08-10;Centro;Ficção;Inválido;-2;10,00');
+    check('Quantidade negativa rejeitada', get('import-feedback').classList.contains('error') && get('kpi-sales').textContent === '2');
+    await upload(header + '2026-08-10;Centro;Ficção;Inválido;2;abc');
+    check('Valor inválido rejeitado', get('import-feedback').classList.contains('error') && get('kpi-sales').textContent === '2');
+    await upload(header + '2026-01-10;Centro;Ficção;<img src=x onerror=alert(1)>;2;0,00');
+    check('Conteúdo exibido como texto', !get('sales-body').querySelector('img') && get('kpi-product').textContent.includes('<img'));
+    check('Receita zero e comparação sem divisão por zero', get('kpi-change').textContent === '—' && get('kpi-revenue').textContent.replace(/\s/g,'') === 'R$0,00');
+    get('restore-original').click();
+    check('Restauração da base original', get('kpi-sales').textContent === '188' && !w.localStorage.getItem('bahubali.vendas.v1'));
+    frame.style.width = '390px'; await delay(300);
+    check('Layout móvel sem rolagem horizontal da página', d.documentElement.scrollWidth <= d.documentElement.clientWidth);
+    check('Sem erros JavaScript', errors.length === 0);
+  } catch(error) { results.push('FAIL Exceção: ' + error.stack); }
+  finally { get('restore-original').click(); }
+  document.getElementById('results').textContent = results.join('\n') + '\n' + errors.join('\n') + '\nTOTAL: ' + results.filter(r=>r.startsWith('PASS')).length + '/' + results.length;
+  document.title = results.some(r=>r.startsWith('FAIL')) ? 'FAIL' : 'PASS';
+});
+</script>
+</body></html>
