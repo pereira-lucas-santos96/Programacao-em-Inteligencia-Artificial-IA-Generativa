@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Career Infrastructure & Topology Showcase</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Mesh de Fundo -->
+  <div class="glow-bg"></div>
+
+  <!-- HUD Superior (Head-Up Display) -->
+  <header class="hud-header">
+    <div class="brand">
+      <div class="node-status-pulse"></div>
+      <div>
+        <h1 class="brand-title">SYSTEM TOPOLOGY <span class="version">v3.0.4</span></h1>
+        <p class="brand-sub">Ecossistema Interativo de Governança, ITAM & Arquitetura de TI</p>
+      </div>
+    </div>
+
+    <!-- Filtros de Trilha Dinâmicos -->
+    <div class="scan-controls">
+      <button onclick="highlightCluster('all')" class="hud-btn active" id="btn-all">
+        <i class="fa-solid fa-network-wired"></i> Visão Global
+      </button>
+      <button onclick="highlightCluster('governance')" class="hud-btn" id="btn-gov">
+        <i class="fa-solid fa-shield-halved"></i> Governança & ITAM
+      </button>
+      <button onclick="highlightCluster('servicenow')" class="hud-btn" id="btn-sn">
+        <i class="fa-solid fa-cubes"></i> ServiceNow & IA
+      </button>
+      <button onclick="highlightCluster('academic')" class="hud-btn" id="btn-acad">
+        <i class="fa-solid fa-graduation-cap"></i> Formação & Arquitetura
+      </button>
+    </div>
+  </header>
+
+  <!-- Area Principal da Topologia Interativa -->
+  <main class="topology-container">
+    <div class="canvas-grid" id="topologyMesh">
+      <!-- Nós gerados via JS dinamicamente -->
+    </div>
+  </main>
+
+  <!-- Drawer Lateral de Telemetria (Detalhes do Nó) -->
+  <aside class="telemetry-drawer" id="telemetryDrawer">
+    <button class="close-drawer" onclick="closeDrawer()"><i class="fa-solid fa-xmark"></i></button>
+    
+    <div class="drawer-header">
+      <span class="drawer-tag" id="nodeTag">CATEGORY</span>
+      <h2 class="drawer-title" id="nodeTitle">Título do Módulo</h2>
+      <p class="drawer-subtitle" id="nodeSubtitle">Período / Instituição</p>
+    </div>
+
+    <div class="drawer-body">
+      <div class="telemetry-card">
+        <h3><i class="fa-solid fa-chart-line"></i> Descrição & Impacto Operacional</h3>
+        <p id="nodeDescription">Aguardando seleção de módulo...</p>
+      </div>
+
+      <div class="telemetry-card">
+        <h3><i class="fa-solid fa-microchip"></i> Stacks & Competências-Chave</h3>
+        <div class="tech-tags-container" id="nodeSkills">
+          <!-- Badges carregadas via JS -->
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <script src="app.js"></script>
+</body>
+</html>

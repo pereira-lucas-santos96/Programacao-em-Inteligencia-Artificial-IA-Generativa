@@ -1,0 +1,242 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+  --bg-deep: #030712;
+  --card-bg: rgba(17, 24, 39, 0.75);
+  --border-cyan: rgba(56, 189, 248, 0.25);
+  --cyan-neon: #38bdf8;
+  --emerald-neon: #10b981;
+  --purple-neon: #a855f7;
+  --amber-neon: #f59e0b;
+  --text-main: #f9fafb;
+  --text-muted: #9ca3af;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  font-family: 'Space Grotesk', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Background Glow */
+.glow-bg {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.1) 0%, rgba(168, 85, 247, 0.05) 50%, transparent 70%);
+  filter: blur(80px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* HUD Header */
+.hud-header {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background: rgba(3, 7, 18, 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-cyan);
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.brand { display: flex; align-items: center; gap: 15px; }
+.node-status-pulse {
+  width: 12px; height: 12px;
+  background: var(--emerald-neon);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--emerald-neon);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse { 50% { opacity: 0.4; } }
+
+.brand-title { font-size: 1.3rem; letter-spacing: 1px; color: var(--text-main); }
+.brand-title .version { font-size: 0.75rem; color: var(--cyan-neon); font-family: 'JetBrains Mono', monospace; }
+.brand-sub { font-size: 0.85rem; color: var(--text-muted); }
+
+/* Buttons de Scan */
+.scan-controls { display: flex; gap: 10px; flex-wrap: wrap; }
+.hud-btn {
+  background: rgba(31, 41, 55, 0.6);
+  border: 1px solid var(--border-cyan);
+  color: var(--text-muted);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-family: 'Space Grotesk', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hud-btn:hover, .hud-btn.active {
+  background: var(--cyan-neon);
+  color: #000;
+  font-weight: 600;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+}
+
+/* Container de Topologia (Grid Flex de Módulos) */
+.topology-container {
+  position: relative;
+  z-index: 5;
+  max-width: 1300px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.canvas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 25px;
+}
+
+/* Cards dos Nós Interativos */
+.node-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-cyan);
+  border-radius: 12px;
+  padding: 24px;
+  backdrop-filter: blur(16px);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.node-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 4px; height: 100%;
+  background: var(--cyan-neon);
+}
+
+.node-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--cyan-neon);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(56, 189, 248, 0.2);
+}
+
+.node-card.dimmed {
+  opacity: 0.25;
+  filter: grayscale(80%);
+}
+
+.node-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.node-icon {
+  font-size: 1.5rem;
+  color: var(--cyan-neon);
+  background: rgba(56, 189, 248, 0.1);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.node-cluster-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.cluster-governance { background: rgba(56, 189, 248, 0.15); color: var(--cyan-neon); }
+.cluster-servicenow { background: rgba(168, 85, 247, 0.15); color: var(--purple-neon); }
+.cluster-academic { background: rgba(16, 185, 129, 0.15); color: var(--emerald-neon); }
+
+.node-card-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
+.node-card-sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; font-family: 'JetBrains Mono', monospace; }
+
+.node-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--cyan-neon);
+  font-weight: 600;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding-top: 12px;
+}
+
+/* Telemetry Drawer (Painel Lateral) */
+.telemetry-drawer {
+  position: fixed;
+  top: 0; right: -450px;
+  width: 420px; height: 100vh;
+  background: rgba(11, 15, 25, 0.95);
+  backdrop-filter: blur(20px);
+  border-left: 1px solid var(--border-cyan);
+  z-index: 100;
+  padding: 30px;
+  transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: -10px 0 40px rgba(0,0,0,0.8);
+  display: flex;
+  flex-direction: column;
+}
+
+.telemetry-drawer.open { right: 0; }
+
+.close-drawer {
+  position: absolute;
+  top: 20px; right: 20px;
+  background: none; border: none;
+  color: var(--text-muted);
+  font-size: 1.4rem; cursor: pointer;
+}
+
+.close-drawer:hover { color: var(--cyan-neon); }
+
+.drawer-header { margin-top: 20px; margin-bottom: 25px; }
+.drawer-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem; color: var(--cyan-neon);
+  text-transform: uppercase; letter-spacing: 1px;
+}
+.drawer-title { font-size: 1.4rem; margin-top: 5px; }
+.drawer-subtitle { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; font-family: 'JetBrains Mono', monospace; }
+
+.telemetry-card {
+  background: rgba(31, 41, 55, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 18px;
+  margin-bottom: 20px;
+}
+
+.telemetry-card h3 {
+  font-size: 0.9rem;
+  color: var(--cyan-neon);
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+
+.telemetry-card p { font-size: 0.9rem; color: #d1d5db; line-height: 1.6; }
+
+.tech-tags-container { display: flex; flex-wrap: wrap; gap: 8px; }
+.skill-badge {
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid var(--border-cyan);
+  color: var(--text-main);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-family: 'JetBrains Mono', monospace;
+}
