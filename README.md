@@ -2,7 +2,7 @@
 
 Projetos práticos do curso de **Programação em Inteligência Artificial Generativa — SENAI**. O objetivo é aplicar ferramentas de IA como apoio à lógica de programação, ao desenvolvimento de código e à criação de soluções funcionais na prática.
 
-O [**index.html da raiz**](index.html) é a entrada do portfólio: apresenta os seis projetos, com busca por nome ou recurso, filtros de aplicações e jogos, ilustrações locais e links para abrir cada um.
+O [**index.html da raiz**](index.html) é a entrada do portfólio: apresenta os oito projetos, com busca por nome ou recurso, filtros de aplicações e jogos, ilustrações locais e links para abrir cada um.
 
 ## Projetos
 
@@ -14,6 +14,8 @@ O [**index.html da raiz**](index.html) é a entrada do portfólio: apresenta os 
 | NoSpoiler Filmes | Busca de filmes, sinopses, detalhes e favoritos via OMDb API | [Buscar filmes](NoSpoiler%20Filmes/public/index.html) |
 | Forca Temática | Palavras, temas de conhecimento, cartas de ajuda e ranking | [Jogar](Jogo%20da%20Forca/index.html) |
 | Templo da Memória | Pares, níveis de dificuldade e até três jogadores locais | [Jogar](jogo%20da%20memoria/index.html) |
+| CertifyPlay | Forca Tech, Termo Técnico e Quiz de Troubleshooting, com XP e conquistas | [Aprender jogando](CertifyPlay/index.html) |
+| Livraria Bahubali | Painel de vendas, gráficos, filtros e importação e exportação CSV | [Explorar painel](Livraria/index.html) |
 
 ## Abrir no computador
 
@@ -52,6 +54,8 @@ Jogo da Forca/                     Jogo de palavras
 jogo da memoria/                   Jogo de pares
 Lista de Tarefas/                  Agenda Próximo Passo
 NoSpoiler Filmes/                  Busca de filmes com OMDb API
+CertifyPlay/                       Jogos educativos de tecnologia da informação
+Livraria/                          Dashboard de vendas da Livraria Bahubali
 Previsão do Tempo/                 Aplicação Brisa
 ```
 
