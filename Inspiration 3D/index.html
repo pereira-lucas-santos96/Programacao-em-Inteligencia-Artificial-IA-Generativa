@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070e14">
+  <title>Inspiration 3D — Esculturas generativas</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="vendor/three.min.js"></script>
+  <script defer src="vendor/OrbitControls.js"></script>
+  <script defer src="assets/lucas-pereira.js"></script>
+  <script defer src="sculpture.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <main>
+    <div id="scene" aria-label="Escultura tridimensional interativa"></div>
+    <header class="topbar">
+      <a class="brand" href="./index.html"><span class="brand-mark">✳</span> Inspiration 3D<span class="brand-divider"></span><span class="brand-sub">ESTÚDIO GENERATIVO</span></a>
+      <span class="live"><i></i> ARTE EM MOVIMENTO</span>
+    </header>
+    <aside class="panel" aria-label="Controles da escultura">
+      <div class="eyebrow">ESTUDO 001 / GEOMETRIA SAGRADA</div>
+      <h1>O invisível,<br><em>em forma.</em></h1>
+      <p class="intro">Pontos que se encontram. Formas que respiram. Um pequeno universo a cada criação.</p>
+      <div class="section-label">COMPOSIÇÃO <span id="style-counter">01 / 05</span></div>
+      <div class="styles" role="group" aria-label="Estilo da escultura">
+        <button class="style active" data-style="lotus" aria-pressed="true"><span>❋</span>Lótus</button>
+        <button class="style" data-style="sun" aria-pressed="false"><span>☀</span>Sol</button>
+        <button class="style" data-style="moon" aria-pressed="false"><span>☾</span>Lua</button>
+        <button class="style" data-style="star" aria-pressed="false"><span>☆</span>Estrela</button>
+        <button class="style name-style" data-style="name" aria-pressed="false"><span>LP</span>Lucas Pereira</button>
+      </div>
+      <p id="style-description" class="style-description">Pétalas paramétricas se abrem em torno de um centro luminoso.</p>
+      <div class="parameters">
+        <label for="density">Quantidade de pontos <output id="density-value" for="density">1800</output></label>
+        <input id="density" type="range" min="800" max="3200" step="100" value="1800">
+        <label for="speed">Velocidade de rotação <output id="speed-value" for="speed">0,12 rad/s</output></label>
+        <input id="speed" type="range" min="0.02" max="0.4" step="0.01" value="0.12">
+        <label for="thickness">Espessura das conexões <output id="thickness-value" for="thickness">1,0×</output></label>
+        <input id="thickness" type="range" min="0.5" max="2.5" step="0.1" value="1">
+      </div>
+      <label class="section-label" for="seed">SEMENTE DA ESCULTURA</label>
+      <form id="seed-form" class="seed-row"><input id="seed" maxlength="64" value="INSPIRATION-108" aria-label="Semente da escultura" required autocomplete="off" spellcheck="false"><button type="submit" title="Recriar com esta semente" aria-label="Recriar com esta semente">↵</button></form>
+      <button id="generate" class="primary">Gerar nova escultura <span>↗</span></button>
+      <div class="secondary-row"><button id="export">↓ Exportar PNG</button><button id="pause" aria-pressed="false">Ⅱ Pausar</button></div>
+      <div class="palette-info"><div id="palette" aria-label="Paleta gerada"></div><span>CORES NASCIDAS DO CÓDIGO</span></div>
+    </aside>
+    <div class="art-caption"><span class="small-star">✧</span><div><h2 id="art-title">Lótus do infinito</h2><p id="art-subtitle">A GEOMETRIA DE UM FLORESCER.</p></div></div>
+    <div class="view-tools"><button id="reset" title="Restaurar câmera" aria-label="Restaurar câmera">◎</button><button id="focus" title="Ocultar painel" aria-label="Ocultar painel" aria-pressed="false">⛶</button></div>
+    <footer><span id="stats">CONSTRUINDO UNIVERSO…</span><span class="instructions">ARRASTE PARA EXPLORAR <b>·</b> ROLE PARA APROXIMAR</span><span>THREE.JS / WEBGL</span></footer>
+    <div id="notice" role="status" aria-live="polite"></div>
+    <div id="error" role="alert" hidden></div>
+    <noscript>Ative o JavaScript para visualizar a escultura.</noscript>
+  </main>
+</body>
+</html>

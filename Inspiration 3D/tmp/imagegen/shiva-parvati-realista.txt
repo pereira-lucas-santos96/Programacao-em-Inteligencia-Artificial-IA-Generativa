@@ -1,0 +1,25 @@
+Use case: stylized-concept
+Input image 1: referência visual de Shiva e Parvati; preservar composição e identidades visuais.
+Objetivo prioritário: transformar a referência em uma cena 3D fotorrealista de qualidade cinematográfica. Os personagens devem parecer pessoas vivas, com pele orgânica, olhos e cabelos naturais, anatomia convincente, tecidos reais e joias detalhadas.
+Representar os atributos divinos com realismo de materiais e luz. Preservar a pele azul e o brilho dos olhos de Shiva, sem ocultar a anatomia do rosto. Parvati deve manter a expressão meditativa e aparência natural.
+Evitar estátua, busto, bonecos, pele plástica, wireframe, rede de pontos, ilustração e efeito de pintura. Não adicionar texto.
+Composição vertical 9:16, uma única imagem, com mãos, rostos e adornos legíveis.
+
+Crie uma imagem com aparência de renderização 3D cinematográfica de altíssima qualidade, usando a imagem anexada de Shiva e Parvati como referência principal. Preserve com máxima fidelidade a composição, as identidades visuais, as posições, as proporções relativas, as expressões, os adornos e a atmosfera espiritual da referência. Converta a aparência pictórica em volume, materiais e iluminação tridimensionais convincentes, com tratamento respeitoso das divindades da tradição hindu.
+
+Composição: formato vertical 9:16, personagens centralizados e enquadramento semelhante ao original, com ambos sentados de pernas cruzadas. Shiva ocupa a posição posterior, em escala maior, e Parvati está à frente, em escala menor. Preserve a sobreposição dos corpos e a disposição dos braços e mãos. Mantenha espaço suficiente para o topo do cabelo de Shiva, o tridente à esquerda da imagem e a base luminosa, sem cortes dos elementos principais.
+
+Shiva: corpo atlético, pele azul com variações naturais de tonalidade, rosto sereno e olhos de brilho azul intenso, preservando a estrutura facial. Cabelos longos e escuros, com coque alto, crescente lunar e luminosidade azul no topo, conforme a referência. Reproduza as marcas claras na testa, os colares, os braceletes, os tecidos e demais adornos visíveis. Mantenha as mãos apoiadas sobre os joelhos e o tridente ao lado esquerdo da composição, atrás de seu ombro. Preserve a anatomia humana coerente sob os elementos divinos.
+
+Parvati: sentada em postura meditativa à frente de Shiva, expressão tranquila, olhos suavemente fechados, cabelos longos e escuros, pele de tom quente e adorno central na testa. Reproduza a vestimenta em tons vermelhos e dourados, os brincos, os colares e os braceletes observáveis na referência. Preserve a posição das mãos junto ao colo, os tecidos sobre as pernas e as proporções do rosto e do corpo, sem alterar a identidade visual ou acrescentar acessórios arbitrários.
+
+Ambiente: espaço cósmico profundo com estrelas discretas, névoas e nebulosas azul-petróleo. Um halo de luz dourada envolve os personagens. Na base, preserve o redemoinho circular de energia dourada e alaranjada, com partículas e filamentos luminosos que sustentam visualmente a cena. Distribua brilhos azuis e dourados de modo semelhante à referência, mantendo os personagens como foco principal.
+
+Tratamento 3D: modelagem anatômica refinada, rostos bem definidos e volumes consistentes. Materiais fisicamente plausíveis (PBR), pele com dispersão subsuperficial sutil e microtextura delicada, cabelos em mechas naturais com fios perceptíveis, tecidos com trama e dobras realistas, joias com detalhes esculpidos e reflexos metálicos controlados. Reconstrua com discrição os detalhes que a baixa resolução da referência não permite distinguir; não invente símbolos ou ornamentos que alterem a composição.
+
+Iluminação: luz dourada de recorte vinda de trás e da base, preenchimento azul suave e luz frontal suficiente para revelar ambos os rostos. Iluminação global, sombras de contato e oclusão ambiente delicada para separar os volumes. Névoa volumétrica sutil e brilho controlado nas fontes de energia. Preserve textura e informação nas áreas claras, sem estouro de exposição. Mantenha Shiva e Parvati nítidos, com profundidade de campo discreta no fundo.
+
+Acabamento: renderização de produção cinematográfica, rica em detalhes e com contraste equilibrado entre azuis frios e dourados quentes. Preserve o caráter sagrado, majestoso e contemplativo da obra. Entregue uma única imagem final, sem texto, moldura, logotipo ou marca-d'água.
+
+RESTRIÇÕES / PROMPT NEGATIVO
+Baixa resolução, desfoque nos personagens, ruído excessivo, artefatos de compressão, anatomia deformada, membros extras, mãos duplicadas, dedos extras ou fundidos, joias fundidas à pele, olhos desalinhados, rostos alterados, postura diferente, personagens adicionais, tridente duplicado ou deformado, elementos principais cortados, símbolos inventados, acessórios modernos, nudez adicionada, sexualização, estética cartoon, anime, low-poly, pele plástica ou encerada, aparência de boneco, excesso de nitidez, halos artificiais, saturação exagerada, iluminação estourada, partículas encobrindo os rostos, texto, assinatura, logotipo, marca-d'água.

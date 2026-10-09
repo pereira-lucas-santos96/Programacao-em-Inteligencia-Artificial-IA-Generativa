@@ -1,0 +1,10 @@
+INSPIRATION 3D - LUCAS PEREIRA
+
+OK - PNG gerado em 2048 x 1536 pixels e inspecionado visualmente.
+OK - Nome exato: Lucas Pereira.
+OK - 18 contornos tipográficos disponíveis para a escultura.
+OK - Cinco composições e dependências locais presentes.
+
+Testes de navegador não executados nesta atualização.
+A imagem PNG separada foi produzida por código com efeito 3D.
+A escultura na aplicação usa pontos e conexões com profundidade.

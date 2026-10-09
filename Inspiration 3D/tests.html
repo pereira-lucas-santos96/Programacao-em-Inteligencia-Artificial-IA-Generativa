@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pt-BR"><meta charset="utf-8"><title>Validação — Inspiration 3D</title>
+<body style="background:#09151b;color:#d9f2e5;font:14px monospace"><h1>Validação do projeto</h1>
+<pre id="result">Executando…</pre><iframe id="app" src="index.html" width="1280" height="900" title="Aplicação sob teste"></iframe>
+<script src="assets/lucas-pereira.js"></script><script src="sculpture.js"></script><script>
+'use strict';
+const results = [];
+function assert(condition, message) { if (!condition) throw new Error(message); results.push('OK — ' + message); document.getElementById('result').textContent = results.join('\n'); }
+async function run() {
+  try {
+    for (const style of ['lotus', 'sun', 'moon', 'star', 'name']) {
+      for (const count of [800, 1800, 3200]) {
+        const a = Sculpture.generate({seed:'teste-123', style, count});
+        const b = Sculpture.generate({seed:'teste-123', style, count});
+        assert(a.points.length === count, style + ': quantidade exata ' + count);
+        assert(JSON.stringify(a) === JSON.stringify(b), style + ': semente reproduzível ' + count);
+        assert(a.points.every(p => p.length === 3 && p.every(Number.isFinite)), style + ': posições finitas ' + count);
+        const connected = new Set();
+        assert(a.edges.every(([i,j]) => { connected.add(i); connected.add(j); return i !== j && i >= 0 && j >= 0 && i < count && j < count; }), style + ': conexões válidas ' + count);
+        assert(connected.size === count, style + ': todos os pontos têm conexão ' + count);
+        const c = Sculpture.generate({seed:'outra-semente', style, count});
+        assert(JSON.stringify(a.points) !== JSON.stringify(c.points) && JSON.stringify(a.palette) !== JSON.stringify(c.palette), style + ': nova semente altera forma e cores ' + count);
+      }
+    }
+    const frame = document.getElementById('app');
+    if (!frame.contentWindow.inspiration3D) await new Promise(resolve => frame.addEventListener('load', resolve, {once:true}));
+    const app = frame.contentWindow, doc = frame.contentDocument;
+    assert(!!app.inspiration3D, 'Aplicação inicia com WebGL e bibliotecas locais');
+    const api = app.inspiration3D;
+    assert(api.renderer.domElement.width > 0 && api.scene.children.length > 0, 'Renderer e cena configurados');
+    const oldAngle = api.angle;
+    await new Promise(resolve => setTimeout(resolve, 180));
+    assert(api.angle !== oldAngle, 'Rotação contínua no loop de animação');
+    doc.getElementById('pause').click();
+    const pausedAngle = api.angle;
+    await new Promise(resolve => setTimeout(resolve, 100));
+    assert(api.angle === pausedAngle, 'Pausa interrompe rotação');
+    doc.getElementById('pause').click();
+    const oldSeed = api.state.seed, oldPalette = JSON.stringify(api.data.palette);
+    doc.getElementById('generate').click();
+    assert(api.state.seed !== oldSeed && JSON.stringify(api.data.palette) !== oldPalette, 'Botão gera nova semente e paleta');
+    doc.querySelector('[data-style="lotus"]').click();
+    assert(api.state.style === 'lotus', 'Seleção de estilo atualiza a escultura');
+    for (const [style, title] of [['sun', 'Sol radiante'], ['moon', 'Lua crescente'], ['star', 'Estrela celeste']]) {
+      doc.querySelector('[data-style="' + style + '"]').click();
+      api.renderer.render(api.scene, api.camera);
+      assert(api.state.style === style && doc.getElementById('art-title').textContent === title, style + ': seleção e legenda');
+      assert(new URLSearchParams(app.location.hash.slice(1)).get('style') === style, style + ': estilo preservado na URL');
+      assert(doc.querySelectorAll('.style[aria-pressed="true"]').length === 1 && doc.querySelector('[data-style="' + style + '"]').getAttribute('aria-pressed') === 'true', style + ': botão ativo acessível');
+    }
+    const density = doc.getElementById('density'); density.value = '2500'; density.dispatchEvent(new app.Event('input'));
+    await new Promise(resolve => setTimeout(resolve, 150));
+    assert(api.data.points.length === 2500, 'Slider altera quantidade de pontos');
+    const thickness = doc.getElementById('thickness'); thickness.value = '2'; thickness.dispatchEvent(new app.Event('input'));
+    assert(api.state.thickness === 2, 'Slider altera espessura');
+    doc.getElementById('seed').value = 'repeticao'; doc.getElementById('seed-form').dispatchEvent(new app.Event('submit', {cancelable:true}));
+    const first = JSON.stringify(api.data);
+    doc.getElementById('seed-form').dispatchEvent(new app.Event('submit', {cancelable:true}));
+    assert(first === JSON.stringify(api.data), 'Formulário recria a mesma geometria e paleta');
+    api.renderer.render(api.scene, api.camera);
+    const geometries = api.renderer.info.memory.geometries;
+    for (let i = 0; i < 12; i++) {
+      doc.getElementById('generate').click();
+      api.renderer.render(api.scene, api.camera);
+    }
+    await new Promise(resolve => setTimeout(resolve, 100));
+    assert(api.renderer.info.memory.geometries <= geometries + 1, 'Regeneração libera geometrias anteriores');
+    let exportedBlob = null, exportedName = null;
+    app.URL.createObjectURL = blob => { exportedBlob = blob; return 'blob:teste'; };
+    app.HTMLAnchorElement.prototype.click = function() { exportedName = this.download; };
+    doc.getElementById('export').click();
+    for (let i = 0; i < 30 && !exportedBlob; i++) await new Promise(resolve => setTimeout(resolve, 100));
+    assert(exportedBlob && exportedBlob.type === 'image/png' && exportedBlob.size > 1000, 'Exportação produz PNG real');
+    const pngHeader = new DataView(await exportedBlob.arrayBuffer());
+    assert(pngHeader.getUint32(16) === 2048 && pngHeader.getUint32(20) === 2048 && exportedName.endsWith('.png'), 'PNG com 2048 × 2048 pixels e nome de arquivo');
+    assert(api.renderer.getSize(new app.THREE.Vector2()).x === app.innerWidth, 'Exportação restaura tamanho do renderer');
+    doc.getElementById('focus').click();
+    assert(doc.body.classList.contains('focused'), 'Modo de foco oculta painel');
+    results.push('\nTODOS OS TESTES PASSARAM');
+    document.body.dataset.status = 'passed';
+  } catch (error) { results.push('\nFALHA: ' + error.message); document.body.dataset.status = 'failed'; }
+  document.getElementById('result').textContent = results.join('\n');
+}
+run();
+</script></body></html>
