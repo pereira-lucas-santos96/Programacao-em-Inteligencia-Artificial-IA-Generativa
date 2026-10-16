@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f3eb">
+  <meta name="description" content="Uma jornada 3D com Aang. Explore ilhas flutuantes e domine os cinco elementos.">
+  <title>Aang | Avatar: Domínio dos Elementos</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23273534'/%3E%3Cpath d='M25 12h14v23h11L32 54 14 35h11z' fill='%237de6ed'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script src="vendor/three.min.js" defer></script>
+  <script src="game-core.js" defer></script>
+  <script src="combat-core.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M9 3h6v10h5l-8 9-8-9h5z"/></symbol>
+    <symbol id="icon-wind" viewBox="0 0 24 24"><path d="M3 8h12c5 0 5-6 1-6-2 0-3 1-3 3M3 12h16c4 0 4 6 0 6-2 0-3-1-3-3M3 16h6c4 0 4 6 0 6"/></symbol>
+    <symbol id="icon-water" viewBox="0 0 24 24"><path d="M12 2C10 6 5 10 5 15a7 7 0 0 0 14 0c0-5-5-9-7-13Z"/><path d="M9 15c0 2 1 3 3 3"/></symbol>
+    <symbol id="icon-earth" viewBox="0 0 24 24"><path d="m3 19 4-12 7-4 7 9-3 7H3Z"/><path d="m7 7 6 5 1-9m-1 9 5 7m-5-7-10 7"/></symbol>
+    <symbol id="icon-fire" viewBox="0 0 24 24"><path d="M13 2c2 7 7 8 7 13a8 8 0 0 1-16 0c0-4 3-7 5-9 0 3 1 4 2 4 2-2 2-5 2-8Z"/><path d="M12 13c-4 4-3 7 0 7s4-3 0-7Z"/></symbol>
+    <symbol id="icon-metal" viewBox="0 0 24 24"><path d="m12 2 9 5v10l-9 5-9-5V7l9-5Z"/><path d="m3 7 9 5 9-5m-9 5v10M7 5l10 5"/></symbol>
+    <symbol id="icon-sound" viewBox="0 0 24 24"><path d="m11 4-6 5H2v6h3l6 5V4Zm5 4a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></symbol>
+    <symbol id="icon-muted" viewBox="0 0 24 24"><path d="m11 4-6 5H2v6h3l6 5V4Zm5 5 6 6m0-6-6 6"/></symbol>
+    <symbol id="icon-expand" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></symbol>
+    <symbol id="icon-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+    <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="icon-play" viewBox="0 0 24 24"><path d="m8 4 12 8-12 8V4Z"/></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+  </svg>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Aang Avatar — início"><span class="brand-seal"><svg><use href="#icon-arrow"/></svg></span><span class="brand-name">AANG <span class="brand-divider">|</span> <span class="avatar-word">AVATAR</span><small>DOMÍNIO DOS ELEMENTOS</small></span></a>
+    <nav aria-label="Navegação principal"><a class="nav-link active" href="#jornada">A jornada</a><button class="nav-link" id="help-button">Como jogar</button><a class="nav-link" href="#elementos">Os elementos</a></nav>
+    <div class="header-note"><span class="status-dot"></span> Encontre seu equilíbrio</div>
+  </header>
+  <main id="jornada">
+    <section class="intro" aria-labelledby="page-title"><div><p class="eyebrow"><span></span> O MUNDO PRECISA DO AVATAR</p><h1 id="page-title">Uma jornada. <em>Cinco elementos.</em></h1><p class="intro-description">Encontre a energia espiritual. Supere os desafios. Restaure o equilíbrio.</p></div><div class="journey-summary"><span class="journey-label">SEU CAMINHO ATÉ O EQUILÍBRIO</span><div class="journey-dots" id="journey-dots" aria-label="Progresso das cinco fases"></div></div></section>
+    <section class="game-shell" id="game-shell" aria-label="Jogo 3D Domínio dos Elementos">
+      <div id="game-canvas" tabindex="0" role="application" aria-label="Arena 3D. WASD ou setas movem Aang. Espaço ou Shift esquiva, P pausa e R reinicia. A partir da segunda fase, evite inimigos e ataques vermelhos."></div><div class="scene-grain" aria-hidden="true"></div>
+      <div class="damage-vignette" aria-hidden="true"></div>
+      <div class="game-topbar">
+        <div class="level-hud glass-panel"><div class="level-symbol"><svg id="level-symbol"><use href="#icon-wind"/></svg></div><div><span class="hud-label" id="level-label">FASE 01 / 05</span><h2 id="level-name">O Templo do Ar</h2></div></div>
+        <div class="stats-hud glass-panel"><div class="timer-block"><svg class="icon"><use href="#icon-clock"/></svg><div><span class="hud-label">TEMPO RESTANTE</span><strong id="timer">01:30</strong></div></div><span class="stat-divider"></span><div class="energy-block"><span class="spirit-orb"></span><div><span class="hud-label">ENERGIA ESPIRITUAL</span><strong><span id="collected">0</span><span class="stat-total"> / <span id="total">6</span></span></strong></div></div></div>
+        <div class="game-tools glass-panel"><button class="icon-button" id="sound-button" aria-label="Ativar som" title="Ativar som (M)" aria-pressed="false"><svg class="icon"><use href="#icon-muted"/></svg></button><button class="icon-button" id="pause-button" aria-label="Pausar jogo" title="Pausar (P)" disabled><svg class="icon"><use href="#icon-pause"/></svg></button><button class="icon-button" id="fullscreen-button" aria-label="Tela cheia" title="Tela cheia"><svg class="icon"><use href="#icon-expand"/></svg></button></div>
+      </div>
+      <div class="location-label"><span class="location-line"></span><span id="location-text">TEMPLO DO AR DO SUL</span><span class="location-coordinates">35° N · 112° E</span></div>
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      <div class="combat-hud glass-panel"><div class="health-row"><span class="hud-label">VITALIDADE</span><span id="health-hearts" role="meter" aria-label="Vidas de Aang" aria-valuemin="0" aria-valuemax="3" aria-valuenow="3"></span></div><div class="threat-row"><span class="threat-dot"></span><span id="threat-label">Treinamento · sem ameaças</span></div></div>
+      <button class="dash-button glass-panel" id="dash-button" title="Esquiva do ar (Espaço ou Shift)" aria-label="Esquiva do ar. Espaço ou Shift." disabled><svg class="icon"><use href="#icon-wind"/></svg><span><strong>Esquiva do ar</strong><small id="dash-status">ESPAÇO / SHIFT</small></span><span class="dash-key" aria-hidden="true">↗</span><span class="dash-charge" id="dash-charge"></span></button>
+      <div class="game-bottom"><div class="mission-card glass-panel"><span class="mission-marker">✧</span><div><span class="hud-label">SUA MISSÃO</span><p id="mission-text">Colete todas as esferas azuis.</p><span class="mission-caption">O primeiro passo é encontrar seu caminho.</span></div></div><div class="compass" aria-hidden="true"><span>N</span><div>✧</div></div></div>
+      <div class="start-panel" id="start-panel"><span class="start-kicker">COLETE. DESVIE. SOBREVIVA.</span><button class="primary-button" id="start-button"><svg class="icon"><use href="#icon-play"/></svg> Iniciar jornada <span>→</span></button><span class="start-hint">WASD para mover · Espaço para esquivar<br>3 vidas · ameaças ativas a partir da fase 2</span></div>
+      <div class="phase-banner" id="phase-banner" hidden><span id="banner-eyebrow">ELEMENTO DOMINADO</span><h2 id="banner-title">Leve como o vento.</h2><p id="banner-subtitle">O próximo caminho está se revelando...</p></div>
+      <div class="overlay" id="pause-overlay" hidden><div class="modal-card"><span class="modal-seal">☁</span><p class="eyebrow">UM MOMENTO DE EQUILÍBRIO</p><h2>Até o Avatar precisa respirar.</h2><p>Sua jornada está pausada. Continue quando estiver pronto.</p><button class="primary-button" id="resume-button">Continuar jornada <span>→</span></button><button class="text-button" id="restart-button">Recomeçar esta fase</button></div></div>
+      <div class="overlay" id="victory-overlay" hidden><div class="modal-card victory-card"><span class="victory-seal"><svg><use href="#icon-arrow"/></svg></span><p class="eyebrow">OS CINCO ELEMENTOS. UM SÓ AVATAR.</p><h2>O equilíbrio foi restaurado.</h2><p>Você sobreviveu aos caçadores e dominou os cinco elementos. O espírito do Avatar vive em você, Aang.</p><div class="victory-elements" id="victory-elements"></div><div class="victory-stats"><div><strong id="victory-orbs">60</strong><span>ENERGIAS COLETADAS</span></div><div><strong id="victory-time">00:00</strong><span>TEMPO DE JORNADA</span></div></div><p class="survival-summary" id="survival-summary"></p><button class="primary-button" id="play-again-button">Uma nova jornada <span>↗</span></button></div></div>
+      <div class="overlay" id="error-overlay" hidden><div class="modal-card"><p class="eyebrow">ALGO INTERROMPEU A JORNADA</p><h2>Não foi possível abrir o mundo 3D.</h2><p id="error-message">Verifique se a aceleração de hardware está ativada no navegador.</p><button class="primary-button" id="reload-button">Tentar novamente</button></div></div>
+      <div class="touch-controls" id="touch-controls" aria-label="Controles de toque"><button data-direction="up" aria-label="Mover para cima">↑</button><button data-direction="left" aria-label="Mover para esquerda">←</button><button data-direction="down" aria-label="Mover para baixo">↓</button><button data-direction="right" aria-label="Mover para direita">→</button></div>
+      <div class="world-caption"><span class="live-dot"></span> UM MUNDO EM EQUILÍBRIO <span>·</span> 3D EXPERIENCE</div>
+    </section>
+    <div class="controls-strip"><div class="keyboard-guide"><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> <span class="control-description">mover</span></span><span><kbd class="wide-key">ESPAÇO</kbd> <span class="control-description">esquiva</span></span><span><kbd>P</kbd> <span class="control-description">pausa</span></span><span><kbd>R</kbd> <span class="control-description">reiniciar</span></span></div><p><span class="tiny-orb"></span> Azul é energia. <span>Vermelho é perigo.</span></p><span class="phase-progress"><span id="mastered-count">0</span> de 5 elementos dominados</span></div>
+    <section class="elements-section" id="elementos" aria-labelledby="elements-title"><div class="section-heading"><h2 id="elements-title">O caminho do Avatar</h2><span>CADA ELEMENTO, UMA NOVA LIÇÃO</span></div><div class="element-grid" id="element-grid"></div></section>
+    <footer><span class="footer-brand">AANG <span> / </span> AVATAR</span><p>“Quando mudamos, o mundo muda com a gente.”</p><span>UMA EXPERIÊNCIA FEITA POR FÃS <span class="footer-spark">✧</span></span></footer>
+  </main>
+  <dialog id="help-dialog" aria-labelledby="help-title"><button class="dialog-close icon-button" id="close-help" aria-label="Fechar instruções">×</button><p class="eyebrow">SEU GUIA ESPIRITUAL</p><h2>Domine a arte de sobreviver.</h2><p id="help-title">Colete todas as esferas azuis antes do tempo acabar. Você tem três vidas por fase.</p><ul class="help-list"><li><span>01</span><div><strong>Movimento e esquiva</strong><p>WASD, setas ou direcional de toque movem Aang. Espaço, Shift ou o botão de esquiva dão um impulso invulnerável. Recarga: 2,6 segundos. A esquiva não atravessa obstáculos.</p></div></li><li><span>02</span><div><strong>A partir da fase 2, você é a presa</strong><p>Caçadores vermelhos perseguem Aang. Obstáculos com anéis vermelhos miram e disparam: saia da linha de tiro. As rochas e outros obstáculos servem de cobertura.</p></div></li><li><span>03</span><div><strong>Leia os sinais de perigo</strong><p>Na fase 3 surgem erupções: círculos vermelhos avisam onde o chão vai explodir. Saia da área antes do clarão. A cada fase há mais inimigos, ataques mais rápidos e menos tempo.</p></div></li><li><span>04</span><div><strong>Uma chance justa</strong><p>Você recebe proteção inicial e breve invulnerabilidade após sofrer dano. Sem vidas ou sem tempo, a fase reinicia automaticamente. P ou Esc pausa; R reinicia; M alterna o som.</p></div></li></ul><button class="primary-button" id="help-done">Estou pronto <span>→</span></button></dialog>
+</body>
+</html>
