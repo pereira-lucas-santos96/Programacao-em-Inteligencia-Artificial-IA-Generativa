@@ -1,0 +1,14 @@
+{
+  "name": "lupes-tour",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Assistente de viagens em HTML, CSS e JavaScript com Microsoft Foundry",
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node --env-file=.env server.js",
+    "demo": "node server.js",
+    "diagnose": "node scripts/diagnose.js",
+    "check": "node --check app.js && node --check server.js && node --check foundry.js && node --check scripts/diagnose.js"
+  }
+}
