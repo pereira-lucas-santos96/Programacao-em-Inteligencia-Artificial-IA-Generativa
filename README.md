@@ -2,7 +2,7 @@
 
 Projetos práticos do curso de **Programação em Inteligência Artificial Generativa — SENAI**. O objetivo é aplicar ferramentas de IA como apoio à lógica de programação, ao desenvolvimento de código e à criação de soluções funcionais na prática.
 
-O [**index.html da raiz**](index.html) é a entrada do portfólio: apresenta os oito projetos, com busca por nome ou recurso, filtros de aplicações e jogos, ilustrações locais e links para abrir cada um.
+O [**index.html da raiz**](index.html) é a entrada do portfólio: apresenta os doze projetos, com busca por nome ou recurso, filtros de aplicações e jogos, ilustrações locais e links para abrir cada um.
 
 ## Projetos
 
@@ -16,6 +16,10 @@ O [**index.html da raiz**](index.html) é a entrada do portfólio: apresenta os 
 | Templo da Memória | Pares, níveis de dificuldade e até três jogadores locais | [Jogar](jogo%20da%20memoria/index.html) |
 | CertifyPlay | Forca Tech, Termo Técnico e Quiz de Troubleshooting, com XP e conquistas | [Aprender jogando](CertifyPlay/index.html) |
 | Livraria Bahubali | Painel de vendas, gráficos, filtros e importação e exportação CSV | [Explorar painel](Livraria/index.html) |
+| LUPES TOUR | Chatbot de viagens, temas, checklist e integração com Microsoft Foundry | [Explorar chatbot](ChatBot%20Integrado/index.html) |
+| DEV Pereira — CV | Currículo interativo de governança, ITAM, ServiceNow e formação | [Explorar currículo](DEV%20Pereira%20-%20CV/index.html) |
+| Inspiration 3D | Esculturas generativas interativas com Three.js e exportação PNG | [Criar escultura](Inspiration%203D/index.html) |
+| Aang — Domínio dos Elementos | Jogo 3D de coleta e sobrevivência com cinco fases procedurais | [Iniciar jornada](Jogo%203D/index.html) |
 
 ## Abrir no computador
 
@@ -57,6 +61,10 @@ NoSpoiler Filmes/                  Busca de filmes com OMDb API
 CertifyPlay/                       Jogos educativos de tecnologia da informação
 Livraria/                          Dashboard de vendas da Livraria Bahubali
 Previsão do Tempo/                 Aplicação Brisa
+ChatBot Integrado/                 Chatbot de viagens LUPES TOUR
+DEV Pereira - CV/                  Currículo interativo de carreira e competências
+Inspiration 3D/                    Esculturas generativas em Three.js
+Jogo 3D/                           Jogo de sobrevivência Aang: Domínio dos Elementos
 ```
 
 Os arquivos do portfólio têm uma pasta própria, sem alterar os estilos e scripts dos projetos. Os arquivos de atividades, manutenção e testes continuam em suas pastas de origem e não aparecem no catálogo público.
